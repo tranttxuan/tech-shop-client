@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../../firebase";
+import { createOrUpdateUser } from "../../functions/auth";
+
 
 const RegisterComponent = ({ history }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setEmail(window.localStorage.getItem('emailForRegistration'))
@@ -38,7 +42,18 @@ const RegisterComponent = ({ history }) => {
                 await user.updatePassword(password);
                 const idTokenResult = await user.getIdTokenResult();
                 // redux store
-                console.log("user", user, "idTokenResult", idTokenResult);
+                createOrUpdateUser(idTokenResult.token)
+                    .then(res => {
+                        const { email,  name, role, _id } = res.data
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                email, name, role, _id,
+                                token: idTokenResult.token
+                            }
+                        })
+                    })
+                    .catch(error => toast.error(error.message))
                 // redirect
                 history.push("/");
             }
@@ -60,7 +75,7 @@ const RegisterComponent = ({ history }) => {
                             value={email}
                             disabled={email}
                             placeholder="Enter email"
-                            onChange={e=> setEmail(e.target.value)}
+                            onChange={e => setEmail(e.target.value)}
                             name="email"
                             autoFocus
                         />

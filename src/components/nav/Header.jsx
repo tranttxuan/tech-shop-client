@@ -19,7 +19,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user)
-  console.log(user)
+
   const handleClick = (e) => {
     // console.log(e.key);
     setCurrent(e.key);
@@ -58,8 +58,20 @@ const Header = () => {
 
       {user &&
         <SubMenu key="user" icon={<SettingOutlined />} title={user.email && user.email.split("@")[0]} className="float-right">
-          <Item key="setting:1">Option 2</Item>
-          <Item key="setting:2">Option 2</Item>
+          {(user && user.role === "subscriber") &&
+            <Item key="dashboard">
+              <Link to="/user/history">
+                Dashboard
+              </Link>
+            </Item>
+          }
+          {(user && user.role === "admin") &&
+            <Item key="dashboard">
+              <Link to="/admin/dashboard">
+                Dashboard
+              </Link>
+            </Item>
+          }
           <Item key="logout"
             icon={<LogoutOutlined />}
             onClick={handleLogout}>

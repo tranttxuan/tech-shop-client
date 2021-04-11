@@ -1,4 +1,4 @@
-import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
+import { GoogleOutlined, LoadingOutlined, MailOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, googleAuthProvider } from "../../firebase";
+import { createOrUpdateUser } from "../../functions/auth";
+
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState("tran.ttxuan91@gmail.com");
@@ -13,19 +15,30 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
+    const roleBasedRedirect = (res) => {
+        if (res.data.role === "admin") history.push("/admin/dashboard")
+        else history.push("/user/history");
+    }
+
     const dispatchUserAndToken = async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
 
-        dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-                email: user.email,
-                token: idTokenResult.token
-            }
-        })
-        // redirect
-        history.push("/");
+        //send information to backend
+        createOrUpdateUser(idTokenResult.token)
+            .then(res => {
+                const { email, name, role, _id } = res.data
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: {
+                        email, name, role, _id,
+                        token: idTokenResult.token,
+                    }
+                })
+                // redirect
+                roleBasedRedirect(res);
+            })
+            .catch(error => toast.error(error.message))
     }
 
     const handleSubmit = async (e) => {
@@ -57,7 +70,7 @@ const Login = ({ history }) => {
         <div className="container p-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    {!loading ? <h4 >Login</h4> : <h4 className="text-danger">Loading ...</h4>}
+                    {!loading ? <h4 >Login</h4> : <h4 className="text-danger"><LoadingOutlined /> Loading ...</h4>}
                     <form action="" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <input
@@ -105,7 +118,7 @@ const Login = ({ history }) => {
                         </Button>
                             <div className="form-group">
                                 <Link to="/forgot/password" className="float-right text-danger">
-                                Forgot Password
+                                    Forgot Password
                                 </Link>
                             </div>
                         </div>

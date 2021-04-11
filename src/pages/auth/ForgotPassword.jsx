@@ -1,3 +1,4 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -7,18 +8,19 @@ import { auth } from '../../firebase';
 const ForgotPassword = ({ history }) => {
     const [email, setEmail] = useState('tran.ttxuan91@gmail.com');
     const [loading, setLoading] = useState(false);
-    // const { user } = useSelector(state => state.user)
+    const  user  = useSelector(state => state.user)
 
-    // useEffect(() => {
-    //     if (user && user.token) history.push("/")
-    // }, [user]);
+    useEffect(() => {
+        //if user is logged in, app redirect to home page
+        if (user && user.token) history.push("/")
+    }, [user, history]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         const actionCodeSettings = {
-            url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL,
+            url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
             handleCodeInApp: true,
         };
 
@@ -37,7 +39,7 @@ const ForgotPassword = ({ history }) => {
 
     return (
         <div className="container col-md-6 offset-md-3 p-5">
-            {loading ? <h4 className="text-danger">Loading ...</h4> : <h4>Forgot Password</h4>}
+            {loading ? <h4 className="text-danger"><LoadingOutlined /> Loading ...</h4> : <h4>Forgot Password</h4>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
