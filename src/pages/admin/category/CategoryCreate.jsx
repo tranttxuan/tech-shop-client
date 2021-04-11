@@ -22,7 +22,7 @@ const CategoryCreate = () => {
                 console.log(list.data)
                 setCategories(list.data)
             })
-            .catch(err => console.log(err))
+            .catch(error => toast.error(error.response.data.message))
     }
 
 
@@ -38,7 +38,7 @@ const CategoryCreate = () => {
             })
             .catch(error => {
                 setLoading(false);
-                toast.error(error.message)
+                toast.error(error.response.data.message)
             })
     }
 
@@ -52,9 +52,9 @@ const CategoryCreate = () => {
                     setLoading(false);
                     loadingCategories();
                 })
-                .catch(err => {
+                .catch(error => {
                     setLoading(false)
-                    toast.error(err.message)
+                    toast.error(error.response.data.message)
                 })
         }
     }
@@ -85,7 +85,7 @@ const CategoryCreate = () => {
                         keyword={keyword}
                         setKeyword={setKeyword}
                     />
-                    <br/>
+                    <br />
                     <div>
                         {categories.filter(searched(keyword)).map(cat => (
                             <div key={cat._id} className="alert alert-primary flex-column">
