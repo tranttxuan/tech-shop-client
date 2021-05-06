@@ -31,8 +31,8 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values, setValues, hand
             <div className="form-group">
                 <label>Price</label>
                 <input
-                    name="number"
-                    type="text"
+                    name="price"
+                    type="number"
                     className="form-control"
                     value={price}
                     min={0}
@@ -58,8 +58,8 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values, setValues, hand
             <div className="form-group">
                 <label>Quantity</label>
                 <input
-                    name="number"
-                    type="text"
+                    name="quantity"
+                    type="number"
                     className="form-control"
                     value={quantity}
                     min={0}
