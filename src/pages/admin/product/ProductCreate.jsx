@@ -24,7 +24,7 @@ const initialState = {
   categories: [],
 };
 
-const CategoryCreate = () => {
+const ProductCreate = () => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const [values, setValues] = useState(initialState);
@@ -87,7 +87,11 @@ const CategoryCreate = () => {
           )}
 
           <div className="p-3">
-            <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
           </div>
 
           <ProductCreateForm
@@ -105,4 +109,4 @@ const CategoryCreate = () => {
   );
 };
 
-export default CategoryCreate;
+export default ProductCreate;

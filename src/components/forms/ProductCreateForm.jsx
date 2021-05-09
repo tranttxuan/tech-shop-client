@@ -2,7 +2,7 @@ import React from 'react'
 import { Select, } from 'antd';
 
 const ProductCreateForm = ({ handleChange, handleSubmit, values, setValues, handleCategoryChange, subOptions, showSub }) => {
-    const { title, description, price, categories, category, subs, shipping, quantity, images, color, colors, brand, brands } = values;
+    const { title, description, price, categories, category, subs, shipping, quantity, color, colors, brand, brands } = values;
 
     return (
         <form onSubmit={handleSubmit}>

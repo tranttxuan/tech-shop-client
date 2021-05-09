@@ -38,7 +38,7 @@ const CategoryUpdate = ({ history, match }) => {
 
     useEffect(() => {
         loadingCategory();
-    }, [])
+    }, [loadingCategory])
 
     return (
         <div className="container-fluid">
