@@ -52,8 +52,7 @@ const ProductUpdate = ({ match, history }) => {
         product.data.subs.map((s) => {
           arr.push(s._id);
         });
-        console.log("ARR", arr);
-        setArrayOfSubs((prev) => arr);
+        setArrayOfSubs(arr);
       })
       .catch((err) => console.log(err));
   };
@@ -94,10 +93,8 @@ const ProductUpdate = ({ match, history }) => {
     setSelectedCategory(e.target.value);
 
     getSubsByCategory(e.target.value)
-    .then((res) => setSubOptions(res.data))
-    .catch((err) => console.log(err));
-    
-    console.log("EXISTING CATEGORY values.category", values.category);
+      .then((res) => setSubOptions(res.data))
+      .catch((err) => console.log(err));
 
     // if user clicks back to the original category
     // show its sub categories in default
@@ -129,7 +126,7 @@ const ProductUpdate = ({ match, history }) => {
               setLoading={setLoading}
             />
           </div>
-
+<br/>
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
