@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import BestSellers from "../components/home/BestSellers";
+import NewArrivals from "../components/home/NewArrivals";
 
 const Home = () => {
-    return (
-        <div>
-          Home  
-        </div>
-    )
-}
 
-export default Home
+  return (
+    <>
+      <NewArrivals />
+      <br/>
+      <BestSellers />
+    </>
+  );
+};
+
+export default Home;
