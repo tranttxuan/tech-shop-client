@@ -1,16 +1,19 @@
+import { Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getProducts } from "../../functions/product";
+import { getProducts, getProductsCount } from "../../functions/product";
 import LoadingCard from "../cards/LoadingCard";
 import ProductCard from "../cards/ProductCard";
 
 function BestSellers() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [productsCount, setProductsCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const loadingAllProducts = () => {
     setLoading(true);
-    getProducts("sold", "desc", 3)
+    getProducts("sold", "desc", page)
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
@@ -22,11 +25,18 @@ function BestSellers() {
   };
   useEffect(() => {
     loadingAllProducts();
+  }, [page]);
+
+  useEffect(() => {
+    getProductsCount()
+      .then((res) => setProductsCount(res.data))
+      .catch((error) => console.log(error));
   }, []);
+
   return (
-    <div>
+    <>
       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-       Best Sellers
+        Best Sellers
       </h4>
       <div className="container">
         {loading ? (
@@ -40,8 +50,17 @@ function BestSellers() {
             ))}
           </div>
         )}
+        <div className="row">
+          <nav className="col-md-4 offset-md-4 text-context pt-5 p-3 ">
+            <Pagination
+              current={page}
+              total={(productsCount / 3) * 10}
+              onChange={(value) => setPage(value)}
+            />
+          </nav>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

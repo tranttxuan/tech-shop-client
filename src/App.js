@@ -25,6 +25,7 @@ import SubUpdate from './pages/admin/sub/SubUpdate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
+import Product from './pages/Product';
 
 function App() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
 
-        {/* auth  */}
+        {/* auth routes */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComponent} />
@@ -74,7 +75,7 @@ function App() {
         <UseRoute exact path="/user/password" component={Password} />
         <UseRoute exact path="/user/wishlist" component={Wishlist} />
 
-        {/* admin  */}
+        {/* admin routes  */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
@@ -84,6 +85,9 @@ function App() {
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
         <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
+
+        {/* public routes  */}
+        <Route exact path="/product/:slug" component={Product} />
       </Switch>
     </>
   );

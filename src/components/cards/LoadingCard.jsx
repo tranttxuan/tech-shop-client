@@ -6,8 +6,8 @@ function LoadingCard({ count }) {
   return (
     <div className="row pb-5">
       {listLoadingElement.map((each) => (
-          <Card className='col-md-4'>
-              <Skeleton key={each} active/>
+          <Card key={each} className='col-md-4'>
+              <Skeleton active/>
           </Card>
       ))}
     </div>
