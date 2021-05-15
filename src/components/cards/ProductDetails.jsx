@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 
 function ProductDetails({ product }) {
     const {
-        title,
-        description,
-        images,
-        slug,
         color,
         shipping,
         brand,

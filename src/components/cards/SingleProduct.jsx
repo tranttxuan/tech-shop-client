@@ -14,7 +14,7 @@ import AverageRating from "../modal/AverageRating";
 const { TabPane } = Tabs;
 
 function SingleProduct({ product, onStarClick, star}) {
-    const { title, description, images, ratings, _id } = product;
+    const { title, description, images, _id } = product;
 
     const handleTabs = () => { };
     return (

@@ -1,6 +1,8 @@
 import React from "react";
 import BestSellers from "../components/home/BestSellers";
+import CategoryList from "../components/home/CategoryList";
 import NewArrivals from "../components/home/NewArrivals";
+import SubCategoryList from "../components/home/SubCategoryList";
 
 const Home = () => {
     return (
@@ -9,6 +11,12 @@ const Home = () => {
             <br />
             <br />
             <BestSellers />
+            <br />
+            <br />
+            <CategoryList />
+            <br />
+            <br />
+            <SubCategoryList />
         </>
     );
 };

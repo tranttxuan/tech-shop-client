@@ -26,6 +26,9 @@ import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import Product from './pages/Product';
+import CategoryPage from './pages/category/CategoryPage';
+import SubPage from './pages/admin/sub/SubPage';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -88,6 +91,8 @@ function App() {
 
         {/* public routes  */}
         <Route exact path="/product/:slug" component={Product} />
+        <Route exact path="/category/:slug" component={CategoryPage} />
+        <Route exact path="/sub/:slug" component={SubPage} />
       </Switch>
     </>
   );
