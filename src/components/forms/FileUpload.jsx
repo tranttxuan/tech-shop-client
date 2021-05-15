@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Avatar, Badge } from "antd";
 
 const FileUpload = ({ values, setValues, setLoading }) => {
-  const { user } = useSelector((state) => ({ ...state }));
+    const user = useSelector(state => state.user);
 
   const fileUploadAndResize = (e) => {
     let files = e.target.files;

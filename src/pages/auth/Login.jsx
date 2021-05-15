@@ -1,7 +1,7 @@
 import { GoogleOutlined, LoadingOutlined, MailOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,10 +14,25 @@ const Login = ({ history }) => {
     const [password, setPassword] = useState("tx00112233");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        let intended = history.location.state;
+        if (intended) return;
+        if (user && user.token) history.push("/");
+    }, [history, user])
 
     const roleBasedRedirect = (res) => {
-        if (res.data.role === "admin") history.push("/admin/dashboard")
-        else history.push("/user/history");
+        let intended = history.location.state;
+        if (intended) {
+            history.push(intended.from);
+        } else {
+            if (res.data.role === "admin") {
+                history.push("/admin/dashboard");
+            } else {
+                history.push("/user/history");
+            }
+        }
     }
 
     const dispatchUserAndToken = async (result) => {
