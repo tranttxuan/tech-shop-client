@@ -10,6 +10,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
+import { LOGOUT } from "../../constants";
 
 
 const { SubMenu, Item } = Menu;
@@ -28,7 +29,7 @@ const Header = () => {
   const handleLogout = async () => {
     await auth.signOut();
     dispatch({
-      type: "LOGOUT",
+      type: LOGOUT,
       payload: null
     });
     history.push("/login");

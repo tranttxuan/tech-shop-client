@@ -3,7 +3,6 @@ import { Modal } from 'antd';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router';
-import StarRatings from "react-star-ratings";
 import { toast } from 'react-toastify';
 
 function RatingModal({ children }) {

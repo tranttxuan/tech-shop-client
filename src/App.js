@@ -40,7 +40,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        // use token to chech auth in frontend and backend 
+        // use token to check auth in frontend and backend 
         currentUser(idTokenResult.token)
           .then(res => {
             const { email, name, role, _id } = res.data

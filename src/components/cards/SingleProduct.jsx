@@ -22,13 +22,13 @@ function SingleProduct({ product, onStarClick, star}) {
             <div className="col-md-7">
                 {images && images.length ? (
                     <Carousel showArrows={true} autoPlay infiniteLoop>
-                        {images.map((image) => (
-                            <img src={image.url} key={image.public_id} />
+                        {images.map((image, id) => (
+                            <img src={image.url} key={image.public_id} alt={`product-${id}`}/>
                         ))}
                     </Carousel>
                 ) : (
                     <Card
-                        cover={<img src={noImage} className="p-1 card-image" />}
+                        cover={<img src={noImage} className="p-1 card-image" alt="no-img"/>}
                     />
                 )}
                 <Tabs defaultActiveKey="1" onChange={handleTabs} type="Card">

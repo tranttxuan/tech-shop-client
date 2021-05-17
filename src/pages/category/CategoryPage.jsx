@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import ProductCard from '../../components/cards/ProductCard';
-import { getCategories, getCategory } from '../../functions/category'
-import { getProducts } from '../../functions/product';
+import { getCategory } from '../../functions/category';
 
 function CategoryPage() {
     let { slug } = useParams();
@@ -25,13 +24,13 @@ function CategoryPage() {
                 console.log(err)
             })
 
-    }, []);
+    }, [slug]);
 
     return (
         <div className="container">
             {loading
-                ? <h4 className="text-center p-3 mt-5 mb-5 display-4 "><LoadingOutlined />Loading ....</h4>
-                : <h4 className="text-center p-3 mt-5 mb-5 display-4 ">{products.length} Products in "{category.name}" category</h4>
+                ? <h4 className="jumbotron text-center p-3 mt-5 mb-5 display-4 "><LoadingOutlined />Loading ....</h4>
+                : <h4 className="jumbotron text-center p-3 mt-5 mb-5 display-4 ">{products.length} Products in "{category.name}" category</h4>
             }
             <div className="row">
                 {products.map(prod => (

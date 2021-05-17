@@ -1,5 +1,5 @@
 import { Pagination } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getProducts, getProductsCount } from "../../functions/product";
 import LoadingCard from "../cards/LoadingCard";
@@ -11,7 +11,7 @@ function NewArrivals() {
 	const [productsCount, setProductsCount] = useState(0);
 	const [page, setPage] = useState(1);
 
-	const loadingAllProducts = () => {
+	const loadingAllProducts = useCallback(() => {
 		setLoading(true);
 		getProducts("createdAt", "desc", page)
 			.then((res) => {
@@ -22,10 +22,11 @@ function NewArrivals() {
 				setLoading(false);
 				toast.error(error.message);
 			});
-	};
+	},[page]);
+
 	useEffect(() => {
 		loadingAllProducts();
-	}, [page]);
+	}, [loadingAllProducts]);
 
 	useEffect(() => {
 		getProductsCount()

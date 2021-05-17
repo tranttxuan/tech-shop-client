@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import CategoryForm from '../../../components/forms/CategoryForm';
@@ -12,12 +12,11 @@ const CategoryUpdate = ({ history, match }) => {
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.user);
 
-    const loadingCategory = () => {
+    const loadingCategory = useCallback(() => {
         getCategory(match.params.slug)
             .then(cat => setName(cat.data.name))
             .catch(err => console.log(err))
-    }
-
+    }, [match.params.slug])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,7 +54,7 @@ const CategoryUpdate = ({ history, match }) => {
                         handleSubmit={handleSubmit}
                         setName={setName}
                     />
-                    
+
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import FileUpload from "../../../components/forms/FileUpload";
@@ -31,15 +31,15 @@ const ProductCreate = () => {
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
 
-  const loadingCategories = () => {
+  const loadingCategories = useCallback(() => {
     getCategories()
       .then((list) => setValues({ ...values, categories: list.data }))
       .catch((error) => toast.error(error.response.data.message));
-  };
+  },[values]);
 
   useEffect(() => {
     loadingCategories();
-  }, []);
+  }, [loadingCategories]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;

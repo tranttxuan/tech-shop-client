@@ -25,14 +25,13 @@ function SubPage() {
                 setLoading(false);
                 console.log(err)
             })
-
-    }, []);
+    }, [slug]);
 
     return (
         <div className="container">
             {loading
-                ? <h4 className="text-center p-3 mt-5 mb-5 display-4 "><LoadingOutlined />Loading ....</h4>
-                : <h4 className="text-center p-3 mt-5 mb-5 display-4 ">{products.length} Products in "{subs.name}" category</h4>
+                ? <h4 className="jumbotron text-center p-3 mt-5 mb-5 display-4 "><LoadingOutlined />Loading ....</h4>
+                : <h4 className="jumbotron text-center p-3 mt-5 mb-5 display-4 ">{products.length} Products in "{subs.name}" category</h4>
             }
             <div className="row">
                 {products.map(prod => (

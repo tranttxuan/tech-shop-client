@@ -13,7 +13,6 @@ function SubCategoryList() {
         getSubs()
             .then(subs => {
                 setSubs(subs.data);
-                console.log(subs.data);
                 setLoading(false);
             })
             .catch(err => {
@@ -31,16 +30,12 @@ function SubCategoryList() {
                 <LoadingCard count={3} />
             ) : (
                 <div className="row">
-                    {subs.length && subs.map((sub) => {
-                        console.log(sub.slug);
-                       return (
+                    {subs.length && subs.map((sub) => 
                             <div
                                 key={sub._id}
                                 className="col btn btn-outlined-primary bt-lg btn-block btn-raised m-3">
                                 <Link to={`/sub/${sub.slug}`}>{sub.name}</Link>
-                            </div>
-                        )
-                    }
+                            </div>                    
                     )}
                 </div>
             )}

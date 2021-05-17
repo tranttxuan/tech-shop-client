@@ -30,16 +30,12 @@ function CategoryList() {
                     <LoadingCard count={3} />
                 ) : (
                     <div className="row">
-                        {categories.length && categories.map((cat) => {
-                            console.log(cat.slug);
-                           return (
+                        {categories.length && categories.map((cat) => 
                                 <div
                                     key={cat._id}
                                     className="col btn btn-outlined-primary bt-lg btn-block btn-raised m-3">
                                     <Link to={`/category/${cat.slug}`}>{cat.name}</Link>
                                 </div>
-                            )
-                        }
                         )}
                     </div>
                 )}
