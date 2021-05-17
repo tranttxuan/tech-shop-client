@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signin } from "../../actions/userActions";
 import { auth } from "../../firebase";
 import { createOrUpdateUser } from "../../functions/auth";
 
@@ -45,13 +46,8 @@ const RegisterComponent = ({ history }) => {
                 createOrUpdateUser(idTokenResult.token)
                     .then(res => {
                         const { email,  name, role, _id } = res.data
-                        dispatch({
-                            type: "LOGGED_IN_USER",
-                            payload: {
-                                email, name, role, _id,
-                                token: idTokenResult.token
-                            }
-                        })
+                        const token = idTokenResult.token;
+                        dispatch(signin(email, name, role, _id , token));
                     })
                     .catch(error => toast.error(error.message))
                 // redirect

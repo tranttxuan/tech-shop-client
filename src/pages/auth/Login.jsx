@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LOGGED_IN_USER } from "../../constants";
+import { signin } from "../../actions/userActions";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../functions/auth";
 
@@ -44,13 +44,9 @@ const Login = ({ history }) => {
         createOrUpdateUser(idTokenResult.token)
             .then(res => {
                 const { email, name, role, _id } = res.data;
-                dispatch({
-                    type: LOGGED_IN_USER,
-                    payload: {
-                        email, name, role, _id,
-                        token: idTokenResult.token,
-                    }
-                })
+                const token = idTokenResult.token;
+                dispatch(signin(email, name, role, _id , token));
+
                 // redirect
                 roleBasedRedirect(res);
             })

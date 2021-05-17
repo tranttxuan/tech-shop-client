@@ -28,6 +28,7 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import Product from './pages/Product';
 import CategoryPage from './pages/category/CategoryPage';
 import SubPage from './pages/admin/sub/SubPage';
+import { signin } from './actions/userActions';
 
 
 function App() {
@@ -44,13 +45,8 @@ function App() {
         currentUser(idTokenResult.token)
           .then(res => {
             const { email, name, role, _id } = res.data
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                email, name, role, _id,
-                token: idTokenResult.token,
-              }
-            })
+            const token = idTokenResult.token;
+            dispatch(signin(email, name, role, _id , token));
           })
           .catch(error => toast.error(error.message))
       }
