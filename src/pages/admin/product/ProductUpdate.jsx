@@ -58,11 +58,10 @@ const ProductUpdate = ({ match, history }) => {
             .catch((err) => console.log(err))
     }, [])
 
-
     useEffect(() => {
-        loadProduct();
         loadCategories();
-    }, [loadProduct,loadCategories]);
+        loadProduct();
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();

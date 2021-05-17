@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -16,15 +16,14 @@ const CategoryCreate = () => {
     const [categories, setCategories] = useState([]);
     const [keyword, setKeyword] = useState('')
 
-    const loadingCategories = () => {
+    const loadingCategories = useCallback(() => {
         getCategories()
             .then(list => {
                 console.log(list.data)
                 setCategories(list.data)
             })
             .catch(error => toast.error(error.response.data.message))
-    }
-
+    },[]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -64,7 +63,7 @@ const CategoryCreate = () => {
 
     useEffect(() => {
         loadingCategories();
-    }, [])
+    }, [loadingCategories])
 
     return (
         <div className="container-fluid">

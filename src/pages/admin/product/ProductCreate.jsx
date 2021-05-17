@@ -35,7 +35,7 @@ const ProductCreate = () => {
     getCategories()
       .then((list) => setValues({ ...values, categories: list.data }))
       .catch((error) => toast.error(error.response.data.message));
-  },[values]);
+  },[]);
 
   useEffect(() => {
     loadingCategories();

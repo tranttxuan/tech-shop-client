@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -20,18 +20,17 @@ const SubCreate = () => {
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState("")
 
-    const loadingSubs = () => {
+    const loadingSubs = useCallback(() => {
         getSubs()
             .then(list => setSubs(list.data))
             .catch(err => console.log(err))
-    }
+    },[]);
 
-
-    const loadingCategories = () => {
+    const loadingCategories = useCallback(() => {
         getCategories()
             .then(list => setCategories(list.data))
             .catch(err => console.log(err))
-    }
+    },[]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,7 +71,7 @@ const SubCreate = () => {
     useEffect(() => {
         loadingSubs();
         loadingCategories();
-    }, [])
+    }, [loadingCategories, loadingSubs])
 
     return (
         <div className="container-fluid">

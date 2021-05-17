@@ -6,7 +6,7 @@ import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import AverageRating from "../modal/AverageRating";
 
 function ProductCard({ product }) {
-    const { title, images, description, product_id, slug } = product;
+    const { title, images,price, description, product_id, slug } = product;
     return (
         <>
             <AverageRating product={product} />
@@ -36,7 +36,7 @@ function ProductCard({ product }) {
                 ]}
             >
                 <Card.Meta
-                    title={title}
+                    title={`${title} - $${price}`}
                     description={`${description.substring(0, 40)} ...`}
                 />
             </Card>
