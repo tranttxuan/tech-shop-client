@@ -29,6 +29,7 @@ import Product from './pages/Product';
 import CategoryPage from './pages/category/CategoryPage';
 import SubPage from './pages/admin/sub/SubPage';
 import { signin } from './actions/userActions';
+import Shop from './pages/Shop';
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryPage} />
         <Route exact path="/sub/:slug" component={SubPage} />
+        <Route exact path="/shop" component={Shop} />
       </Switch>
     </>
   );
