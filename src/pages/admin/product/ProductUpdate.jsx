@@ -61,7 +61,7 @@ const ProductUpdate = ({ match, history }) => {
     useEffect(() => {
         loadCategories();
         loadProduct();
-    }, []);
+    }, [loadCategories,loadProduct]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
