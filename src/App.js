@@ -30,70 +30,71 @@ import CategoryPage from './pages/category/CategoryPage';
 import SubPage from './pages/admin/sub/SubPage';
 import { signin } from './actions/userActions';
 import Shop from './pages/Shop';
+import Shopping_test from './pages/Shopping_test';
 
 
 function App() {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    //prevent from memory leak and all that stuff
-    // Once app fetches user from firebase, it returns (cleanup) so no more calls to firebase is made.
-    // By the way firebase is realtime so it keeps track of user authStateChanged when login or logout.
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const idTokenResult = await user.getIdTokenResult();
-        // use token to check auth in frontend and backend 
-        currentUser(idTokenResult.token)
-          .then(res => {
-            const { email, name, role, _id } = res.data
-            const token = idTokenResult.token;
-            dispatch(signin(email, name, role, _id , token));
-          })
-          .catch(error => toast.error(error.message))
-      }
-    })
-    //clean up
-    return () => unsubscribe();
-  }, [dispatch])
+    useEffect(() => {
+        //prevent from memory leak and all that stuff
+        // Once app fetches user from firebase, it returns (cleanup) so no more calls to firebase is made.
+        // By the way firebase is realtime so it keeps track of user authStateChanged when login or logout.
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const idTokenResult = await user.getIdTokenResult();
+                // use token to check auth in frontend and backend 
+                currentUser(idTokenResult.token)
+                    .then(res => {
+                        const { email, name, role, _id } = res.data
+                        const token = idTokenResult.token;
+                        dispatch(signin(email, name, role, _id, token));
+                    })
+                    .catch(error => toast.error(error.message))
+            }
+        })
+        //clean up
+        return () => unsubscribe();
+    }, [dispatch])
 
-  return (
-    <>
-      <Header />
-      <ToastContainer />
-      <Switch>
-        <Route exact path="/" component={Home} />
+    return (
+        <>
+            <Header />
+            <ToastContainer />
+            <Switch>
+                <Route exact path="/" component={Home} />
 
-        {/* auth routes */}
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/register/complete" component={RegisterComponent} />
-        <Route exact path="/forgot/password" component={ForgotPassword} />
-        <Route exact path="/login" component={Login} />
+                {/* auth routes */}
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/register/complete" component={RegisterComponent} />
+                <Route exact path="/forgot/password" component={ForgotPassword} />
+                <Route exact path="/login" component={Login} />
 
-        {/* private routes  */}
-        <UseRoute exact path="/user/history" component={History} />
-        <UseRoute exact path="/user/password" component={Password} />
-        <UseRoute exact path="/user/wishlist" component={Wishlist} />
+                {/* private routes  */}
+                <UseRoute exact path="/user/history" component={History} />
+                <UseRoute exact path="/user/password" component={Password} />
+                <UseRoute exact path="/user/wishlist" component={Wishlist} />
 
-        {/* admin routes  */}
-        <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
-        <AdminRoute exact path="/admin/category" component={CategoryCreate} />
-        <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
-        <AdminRoute exact path="/admin/sub" component={SubCreate} />
-        <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
-        
-        <AdminRoute exact path="/admin/product" component={ProductCreate} />
-        <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
-        <AdminRoute exact path="/admin/products" component={AllProducts} />
+                {/* admin routes  */}
+                <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+                <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+                <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+                <AdminRoute exact path="/admin/sub" component={SubCreate} />
+                <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
 
-        {/* public routes  */}
-        <Route exact path="/product/:slug" component={Product} />
-        <Route exact path="/category/:slug" component={CategoryPage} />
-        <Route exact path="/sub/:slug" component={SubPage} />
-        <Route exact path="/shop" component={Shop} />
-      </Switch>
-    </>
-  );
+                <AdminRoute exact path="/admin/product" component={ProductCreate} />
+                <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
+                <AdminRoute exact path="/admin/products" component={AllProducts} />
+
+                {/* public routes  */}
+                <Route exact path="/product/:slug" component={Product} />
+                <Route exact path="/category/:slug" component={CategoryPage} />
+                <Route exact path="/sub/:slug" component={SubPage} />
+                <Route exact path="/shop" component={Shopping_test} />
+            </Switch>
+        </>
+    );
 }
 
 export default App;

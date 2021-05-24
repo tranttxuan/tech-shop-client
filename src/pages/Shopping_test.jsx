@@ -1,0 +1,324 @@
+import { BgColorsOutlined, BranchesOutlined, CloudFilled, DollarOutlined, DownSquareOutlined, LoadingOutlined, ShoppingOutlined, StarOutlined, TagOutlined } from '@ant-design/icons'
+import { Checkbox, Menu, Radio, Slider } from 'antd'
+import SubMenu from 'antd/lib/menu/SubMenu'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import ProductCard from '../components/cards/ProductCard'
+import Star from '../components/forms/Star'
+import { getCategories } from '../functions/category'
+import { fetchProductByFilter, getProductsByCount } from '../functions/product'
+import { getSubs } from '../functions/sub'
+
+function Shopping_test() {
+    const [queries, setQueries] = useState({});
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState();
+    const [price, setPrice] = useState([0, 5000]);
+    const [categoryIds, setCategoryIds] = useState([]);
+    const [categoryNames, setCategoryNames] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [stars, setStars] = useState(0);
+    const [sub, setSub] = useState("");
+    const [subs, setSubs] = useState([]);
+    const [brands, setBrands] = useState(['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'HP']);
+    const [brand, setBrand] = useState('');
+    const [colors, setColors] = useState(['Black', 'Red', 'Blue', 'White', 'Brown', 'Silver']);
+    const [color, setColor] = useState('');
+    const [shipping, setShipping] = useState('')
+
+    const dispatch = useDispatch();
+    const search = useSelector(state => state.search);
+    const { text } = search;
+
+    // loading all category and subs
+    const loadCategories = useCallback(() => {
+        getCategories()
+            .then((cat) => setCategories(cat.data))
+            .catch(err => console.log(err))
+    }, []);
+
+    const loadSubs = useCallback(() => {
+        getSubs()
+            .then((sub) => setSubs(sub.data))
+            .catch(err => console.log(err))
+    }, []);
+
+    useEffect(() => {
+        loadCategories();
+        loadSubs();
+    }, [loadCategories, loadSubs]);
+
+    //function for loading products based on queries
+    const fetchProducts = (arg) => {
+        fetchProductByFilter(arg)
+            .then(products => {
+                setProducts(products.data);
+                setLoading(false);
+                console.log(products.data)
+            })
+            .catch(err => {
+                setLoading(false);
+                console.log(err);
+            });
+    };
+
+    //****************** handle filter by price *******************
+    const handleSlider = (price) => {
+        setPrice(price);
+        setTimeout(() => {
+            setQueries({ ...(queries && queries), price });
+        }, 300)
+    }
+
+    //****************** handle filter by input search *******************
+    useEffect(() => {
+        console.log(Object.keys(queries));
+        const delayed = setTimeout(() => {
+            setQueries({ ...(queries && queries), text });
+        }, 300);
+        return () => clearTimeout(delayed);
+    }, [text]);
+
+
+    //****************** handle filter by category *******************
+    //handle check for categories
+    const handleCheckCategory = (e) => {
+        let checkedCategories = e;
+        //use categoryId to find category name
+        let categoryName = checkedCategories.map(checkedId => categories.filter(cat => cat._id === checkedId)[0].name);
+        setCategoryNames(categoryName);
+        console.log({ categoryName })
+        setCategoryIds(checkedCategories);
+        setQueries({ ...(queries && queries), category: checkedCategories });
+    };
+
+    // show categories in a list of checkbox 
+    const showCategories = () => (
+        <Checkbox.Group onChange={handleCheckCategory} value={categoryIds}>
+            {categories.map((category) => (
+                <div key={category._id} >
+                    <Checkbox
+                        className="pb-2 pl-4 pr-4"
+                        value={category._id}
+                        name='category'
+                    >
+                        {category.name}
+                    </Checkbox>
+                    <br />
+                </div>
+            ))}
+        </Checkbox.Group>
+    )
+
+    //****************** handle filter by star *******************
+    const handleStarClick = (stars) => {
+        setStars(stars);
+        setQueries({ ...(queries && queries), stars });
+    }
+    //  show star rating
+    const showStar = () =>
+        [...Array(5).keys()].reverse().map((star, i) =>
+            <div className="pr-4 pl-4 pb-2" key={`star-${i}`}>
+                <Star starClick={handleStarClick} numberOfStars={star + 1} />
+            </div>
+        );
+
+    //****************** handle filter by Subcategory *******************
+    const handleSub = (sub) => {
+        const subName = subs.filter(s => s._id === sub)[0].name
+        setSub(subName);
+        setQueries({ ...(queries && queries), sub });
+    }
+    const showSubCategories = () =>
+        <div className="row ml-4 mr-4">
+            {subs.map((sub) =>
+                <div
+                    key={sub._id}
+                    onClick={() => handleSub(sub._id)}
+                    className="p-1 m-1 badge badge-secondary"
+                    style={{ cursor: 'pointer' }}
+                >
+                    {sub.name}
+                </div>
+            )}
+        </div>
+    //****************** handle filter by Brand *******************
+    const handleBrand = (e) => {
+        setBrand(e.target.value);
+        setQueries({ ...(queries && queries), brand: e.target.value });
+    }
+    const showBrand = () =>
+        <Radio.Group onChange={handleBrand} value={brand}>
+            {brands.map((b) => (
+                <div key={b}>
+                    <Radio
+                        className="pb-2 pl-4"
+                        value={b}
+                        name='brand'
+                    >
+                        {b}
+                    </Radio>
+                    <br />
+                </div>
+            ))}
+        </Radio.Group>
+
+    //****************** handle filter by Color *******************
+    const handleColor = (e) => {
+        setColor(e.target.value);
+        setQueries({ ...(queries && queries), color: e.target.value });
+    }
+    const showColor = () =>
+        <Radio.Group onChange={handleColor} value={color}>
+            {colors.map((c) => (
+                <div key={c}>
+                    <Radio
+                        className="pb-2 pl-4"
+                        value={c}
+                        name='color'
+                    >
+                        {c}
+                    </Radio>
+                    <br />
+                </div>
+            ))}
+        </Radio.Group>
+    //****************** handle filter by Shipping *******************
+    const handleShipping = (e) => {
+        setShipping(e.target.value);
+        setQueries({ ...(queries && queries), shipping: e.target.value });
+    }
+
+    const showShipping = () =>
+        <Radio.Group onChange={handleShipping} value={shipping}>
+            {['Yes', 'No'].map((isShipping) => (
+                <div key={isShipping}>
+                    <Radio
+                        className="pb-2 pl-4"
+                        value={isShipping}
+                        name='shipping'
+                    >
+                        {isShipping}
+                    </Radio>
+                    <br />
+                </div>
+            ))}
+        </Radio.Group>
+
+    //loading products
+    useEffect(() => {
+        console.log("here")
+        fetchProducts(queries);
+    }, [queries]);
+
+    return (
+        <div className="container-fluid">
+            <div className='row'>
+                <div className='col-md-3 pt-2'>
+                    <h4>Search/Filters</h4>
+                    <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode='inline'>
+                        <SubMenu key='1' title={<span className='h6'><DollarOutlined />Price</span>}>
+                            <div>
+                                <Slider
+                                    range
+                                    tipFormatter={price => `$${price}`}
+                                    className='ml-4 mr-4'
+                                    value={price}
+                                    onChange={handleSlider}
+                                    disabled={false}
+                                    max='4999'
+                                    marks={{ 0: '$0', 5000: '$5000' }}
+                                    autoFocus
+                                />
+                            </div>
+                        </SubMenu>
+                        <SubMenu key='2' title={<span className='h6'><DownSquareOutlined />Category</span>}>
+                            <div>
+                                {showCategories()}
+                            </div>
+                        </SubMenu>
+                        <SubMenu key='3' title={<span className='h6'><StarOutlined />Ratings</span>}>
+                            <div>
+                                {showStar()}
+                            </div>
+                        </SubMenu>
+                        <SubMenu key='4' title={<span className='h6'><TagOutlined />Sub Categories</span>}>
+                            <div>
+                                {showSubCategories()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key='5' title={<span className='h6'><BranchesOutlined />Brand</span>}>
+                            <div>
+                                {showBrand()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key='6' title={<span className='h6'><BgColorsOutlined />Color</span>}>
+                            <div>
+                                {showColor()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key='7' title={<span className='h6'><ShoppingOutlined />Shipping</span>}>
+                            <div>
+                                {showShipping()}
+                            </div>
+                        </SubMenu>
+                    </Menu>
+                </div>
+                <div className='col-md-9 pt-2'>
+                    <div className="pb-2">
+                        <h4 className='text-danger'>Filter by: </h4>
+                        <div className="dd-flex align-items-center">
+                        {
+                            price.length !== 0 &&
+                            <>
+                                <p>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></p>
+                            </>
+                        }
+                        {
+                            text && <p>Text search : <span className='text-info'>{text}</span></p>
+                        }
+                        {
+                            categoryNames.length !== 0 &&
+                            <p>Categories:
+                                {categoryNames.map(cat => <span className='text-info'> {`${cat}, `}</span>)}
+                            </p>
+                        }
+                        {
+                            stars !== 0 && <p>Average Rating : <span className='text-info'>{stars}</span></p>
+                        }
+                        {
+                            sub && <p>Sub : <span className='text-info'>{sub}</span></p>
+                        }
+                        {
+                            brand && <p>Brand : <span className='text-info'>{brand}</span></p>
+                        }
+                        {
+                            color && <p>Color : <span className='text-info'>{color}</span></p>
+                        }
+                        {
+                            shipping && <p>Shipping : <span className='text-info'>{shipping}</span></p>
+                        }
+                        </div>
+                    </div>
+                    {loading
+                        ? <h4><LoadingOutlined className='text-danger' />Loading ... </h4>
+                        : <h4 className='text-danger'>Products</h4>}
+
+                    {products.length < 1 && <p>No product found</p>}
+                    <div className="row pb-5">
+                        {products.map(product =>
+                            <div key={product._id} className='col-md-4 mt-3'>
+                                <ProductCard product={product} />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Shopping_test
