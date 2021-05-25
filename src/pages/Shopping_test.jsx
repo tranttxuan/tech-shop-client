@@ -1,19 +1,21 @@
 import { BgColorsOutlined, BranchesOutlined, CloudFilled, DollarOutlined, DownSquareOutlined, LoadingOutlined, ShoppingOutlined, StarOutlined, TagOutlined } from '@ant-design/icons'
-import { Checkbox, Menu, Radio, Slider } from 'antd'
+import {  Button, Checkbox, Menu, Radio, Slider } from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
 import Star from '../components/forms/Star'
+import { PRICE_RANGE } from '../constants'
 import { getCategories } from '../functions/category'
-import { fetchProductByFilter, getProductsByCount } from '../functions/product'
+import { fetchProductByFilter} from '../functions/product'
 import { getSubs } from '../functions/sub'
+import { removeSearchValue } from '../actions/searchActions';
 
 function Shopping_test() {
     const [queries, setQueries] = useState({});
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState();
-    const [price, setPrice] = useState([0, 5000]);
+    const [price, setPrice] = useState(PRICE_RANGE);
     const [categoryIds, setCategoryIds] = useState([]);
     const [categoryNames, setCategoryNames] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -211,6 +213,19 @@ function Shopping_test() {
         fetchProducts(queries);
     }, [queries]);
 
+    const handleRemoveFilter = () => {
+        setPrice(PRICE_RANGE);
+        setCategoryIds([]);
+        setCategoryNames([]);
+        setStars(0);
+        setSub('');
+        setBrand('');
+        setColor('');
+        setShipping('');
+        dispatch(removeSearchValue());
+        setQueries({});
+    }
+
     return (
         <div className="container-fluid">
             <div className='row'>
@@ -269,43 +284,46 @@ function Shopping_test() {
                 </div>
                 <div className='col-md-9 pt-2'>
                     <div className="pb-2">
-                        <h4 className='text-danger'>Filter by: </h4>
-                        <div className="dd-flex align-items-center">
-                        {
-                            price.length !== 0 &&
-                            <>
-                                <p>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></p>
-                            </>
-                        }
-                        {
-                            text && <p>Text search : <span className='text-info'>{text}</span></p>
-                        }
-                        {
-                            categoryNames.length !== 0 &&
-                            <p>Categories:
+                            <h4 className='text-danger'>Filter Commands:</h4>
+
+                        <div className="d-inline-flex align-items-center">
+                            <p className='m-0'>
+                            {
+                                price.length !== 0 &&
+                                <>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></>
+                            }
+                            {
+                                text && <> - Text search : <span className='text-info'>{text}</span></>
+                            }
+                            {
+                                categoryNames.length !== 0 &&
+                                <> - Categories:
                                 {categoryNames.map(cat => <span className='text-info'> {`${cat}, `}</span>)}
+                                </>
+                            }
+                            {
+                                stars !== 0 && <> - Average Rating : <span className='text-info'>{stars}</span></>
+                            }
+                            {
+                                sub && <> - Sub : <span className='text-info'>{sub}</span></>
+                            }
+                            {
+                                brand && <> - Brand : <span className='text-info'>{brand}</span></>
+                            }
+                            {
+                                color && <> - Color : <span className='text-info'>{color}</span></>
+                            }
+                            {
+                                shipping && <> - Shipping : <span className='text-info'>{shipping}</span></>
+                            }
+                            {' '}
+                            <Button onClick={handleRemoveFilter} type="dashed">Remove filter</Button>
                             </p>
-                        }
-                        {
-                            stars !== 0 && <p>Average Rating : <span className='text-info'>{stars}</span></p>
-                        }
-                        {
-                            sub && <p>Sub : <span className='text-info'>{sub}</span></p>
-                        }
-                        {
-                            brand && <p>Brand : <span className='text-info'>{brand}</span></p>
-                        }
-                        {
-                            color && <p>Color : <span className='text-info'>{color}</span></p>
-                        }
-                        {
-                            shipping && <p>Shipping : <span className='text-info'>{shipping}</span></p>
-                        }
                         </div>
                     </div>
                     {loading
                         ? <h4><LoadingOutlined className='text-danger' />Loading ... </h4>
-                        : <h4 className='text-danger'>Products</h4>}
+                        : <h4 className='text-danger'>{products && products.length} Products</h4>}
 
                     {products.length < 1 && <p>No product found</p>}
                     <div className="row pb-5">
