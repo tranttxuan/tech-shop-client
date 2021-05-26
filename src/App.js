@@ -29,8 +29,9 @@ import Product from './pages/Product';
 import CategoryPage from './pages/category/CategoryPage';
 import SubPage from './pages/admin/sub/SubPage';
 import { signin } from './actions/userActions';
-import Shop from './pages/Shop';
-import Shopping_test from './pages/Shopping_test';
+// import Shop from './pages/Shop';
+import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
+import Cart from './pages/Cart';
 
 
 function App() {
@@ -91,7 +92,9 @@ function App() {
                 <Route exact path="/product/:slug" component={Product} />
                 <Route exact path="/category/:slug" component={CategoryPage} />
                 <Route exact path="/sub/:slug" component={SubPage} />
-                <Route exact path="/shop" component={Shopping_test} />
+                {/* <Route exact path="/shop" component={Shop} /> */}
+                <Route exact path="/shop" component={Shop_CombinedFilters} />
+                <Route exact path="/cart" component={Cart} />
             </Switch>
         </>
     );

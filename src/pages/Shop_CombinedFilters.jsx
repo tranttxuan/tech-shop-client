@@ -1,4 +1,4 @@
-import { BgColorsOutlined, BranchesOutlined, CloudFilled, DollarOutlined, DownSquareOutlined, LoadingOutlined, ShoppingOutlined, StarOutlined, TagOutlined } from '@ant-design/icons'
+import { BgColorsOutlined, BranchesOutlined, DollarOutlined, DownSquareOutlined, LoadingOutlined, ShoppingOutlined, StarOutlined, TagOutlined } from '@ant-design/icons'
 import {  Button, Checkbox, Menu, Radio, Slider } from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ import { fetchProductByFilter} from '../functions/product'
 import { getSubs } from '../functions/sub'
 import { removeSearchValue } from '../actions/searchActions';
 
-function Shopping_test() {
+function Shop_CombinedFilters() {
     const [queries, setQueries] = useState({});
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState();
@@ -339,4 +339,4 @@ function Shopping_test() {
     )
 }
 
-export default Shopping_test
+export default Shop_CombinedFilters
