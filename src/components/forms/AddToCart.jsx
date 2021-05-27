@@ -12,7 +12,7 @@ function AddToCart({ product }) {
 
     const handleAddToCart = () => {
         setToolTip('Added');
-        dispatch(addProductToCart({product, count:1}));
+        dispatch(addProductToCart({...product, count:1}));
     }
     return (
         <Tooltip title={toolTip} color='green'>

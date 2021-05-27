@@ -17,7 +17,7 @@ export const cartReducer = (state = initialState, action) => {
                  return [
                       ...state,
                     state.find(itemInCart =>
-                           itemInCart.product.title === existItem.product.title ? item : itemInCart)
+                           itemInCart.title === existItem.title ? item : itemInCart)
                       ];
             } else {
                  return  [...state, item];

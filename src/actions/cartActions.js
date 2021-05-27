@@ -7,6 +7,5 @@ export const addProductToCart = (item) => (dispatch, getState) => {
     })
     if (typeof window !== 'undefined') {
         localStorage.setItem('cart', JSON.stringify(getState().cart));
-        console.log('check', getState().cart)
     }
 };
