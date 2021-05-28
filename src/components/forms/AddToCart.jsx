@@ -3,6 +3,7 @@ import { Tooltip } from 'antd'
 import React, { useState } from 'react'
 import { addProductToCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { setVisibleDrawer } from '../../actions/drawerAction';
 
 function AddToCart({ product }) {
     const [toolTip, setToolTip] = useState('Click to add');
@@ -12,6 +13,7 @@ function AddToCart({ product }) {
 
     const handleAddToCart = () => {
         setToolTip('Added');
+        dispatch(setVisibleDrawer(true));
         dispatch(addProductToCart({...product, count:1}));
     }
     return (

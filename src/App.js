@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Header from './components/nav/Header';
+import SideDrawer from './components/drawer/SideDrawer';
 import RegisterComponent from './pages/auth/RegisterComponent';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -32,7 +33,6 @@ import { signin } from './actions/userActions';
 // import Shop from './pages/Shop';
 import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
 import Cart from './pages/Cart';
-
 
 function App() {
     const dispatch = useDispatch();
@@ -61,6 +61,7 @@ function App() {
     return (
         <>
             <Header />
+            <SideDrawer />
             <ToastContainer />
             <Switch>
                 <Route exact path="/" component={Home} />

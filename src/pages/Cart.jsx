@@ -11,7 +11,7 @@ function Cart() {
             return acc + item.count * item.price;
         }, 0);
 
-    const saveOrderToDB = () => {
+    const saveOrderToDB = (event) => {
 
     }
 
@@ -26,6 +26,7 @@ function Cart() {
                     <th scope='col'>Color</th>
                     <th scope='col'>Count</th>
                     <th scope='col'>Shipping</th>
+                    <th scope='col'>Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,7 +51,7 @@ function Cart() {
                     <h4>Order Summary</h4>
                     <hr />
                     <p>Products</p>
-                    <table class="table table-striped">
+                    <table className="table table-striped">
                         <tbody>
                             {cart.map(item =>
                                 <tr key={item.title}>
