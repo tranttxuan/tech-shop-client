@@ -30,8 +30,9 @@ function SideDrawer() {
                 <div key={product._id} className="row">
                     <div className="col">
                         <img
-                            src={product.images[0] ? product.images[0].url : ""}
+                            src={product.images[0] ? product.images[0].url : noImage}
                             style={imageStyle}
+                            alt={product.title}
                         />
                         <p className='text-center bg-secondary text-light'>
                             {product.title} x <strong>{product.count}</strong>

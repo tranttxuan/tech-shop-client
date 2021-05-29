@@ -17,6 +17,8 @@ import { signout } from "../../actions/userActions";
 
 const { SubMenu, Item } = Menu;
 
+
+
 const Header = () => {
     const [current, setCurrent] = useState("home");
     const dispatch = useDispatch();
@@ -29,6 +31,13 @@ const Header = () => {
         setCurrent(e.key);
     };
 
+    const numberOfProductsInCart = () =>
+        cart.reduce((acc, item) => acc + item.count, 0)
+
+    const getXOffset = () => {
+        const count = numberOfProductsInCart()
+        return count < 10 ? 9 : count < 100 ? 16 : 20
+    }
     const handleLogout = async () => {
         await auth.signOut();
         dispatch(signout());
@@ -45,7 +54,10 @@ const Header = () => {
             </Item>
             <Item key="cart" icon={<ShoppingCartOutlined />}>
                 <Link to="/cart">
-                    <Badge count={cart.length} offset={[9, 0]}>
+                    <Badge
+                        overflowCount={500}
+                        count={numberOfProductsInCart()}
+                        offset={[getXOffset(), 0]}>
                         Cart
                     </Badge>
                 </Link>

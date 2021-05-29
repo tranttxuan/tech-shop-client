@@ -79,7 +79,7 @@ function Shop_CombinedFilters() {
             setQueries({ ...(queries && queries), text });
         }, 300);
         return () => clearTimeout(delayed);
-    }, [text]);
+    }, [text, queries]);
 
 
     //****************** handle filter by category *******************

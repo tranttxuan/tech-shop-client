@@ -44,7 +44,7 @@ function ProductCardInCheckout({ product }) {
                             small={product.images[0].url}
                             large={product.images[0].url}
                             alt={product.title} />
-                        : <img src={noImage} style={{ width: "100px", height: "100px" }}/>}
+                        : <img alt={product.title} src={noImage} style={{ width: "100px", height: "100px" }}/>}
                 </div>
 
 
