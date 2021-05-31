@@ -26,7 +26,7 @@ function SideDrawer() {
             onClose={onClose}
             visible={drawer}
         >
-            {cart.map(product =>
+            { cart.map(product =>
                 <div key={product._id} className="row">
                     <div className="col">
                         <img

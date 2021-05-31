@@ -33,6 +33,7 @@ import { signin } from './actions/userActions';
 // import Shop from './pages/Shop';
 import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() {
     const dispatch = useDispatch();
@@ -96,6 +97,9 @@ function App() {
                 {/* <Route exact path="/shop" component={Shop} /> */}
                 <Route exact path="/shop" component={Shop_CombinedFilters} />
                 <Route exact path="/cart" component={Cart} />
+
+                {/* Checkout Route  */}
+                <UseRoute exact path="/checkout" component={Checkout} />
             </Switch>
         </>
     );

@@ -35,6 +35,7 @@ function ProductCardInCheckout({ product }) {
         product.count = Number(count);
         dispatch(addProductToCart(product));
     }
+    
     return (
         <tr>
             <td>

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART} from "../constants";
+import { ADD_TO_CART, EMPTY_CART, REMOVE_FROM_CART} from "../constants";
 
 export const addProductToCart = (item) => (dispatch, getState) => {
     dispatch({
@@ -21,3 +21,13 @@ export const removeProductToCart = (item) => (dispatch, getState) => {
         localStorage.setItem('cart', JSON.stringify(getState().cart));
     }
 };
+
+export const removeUserCart = () => (dispatch) => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('cart');
+    }
+    dispatch({
+        type: EMPTY_CART,
+        payload: [],
+    })
+}

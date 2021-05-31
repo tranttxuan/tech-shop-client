@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../constants";
+import { ADD_TO_CART, EMPTY_CART, REMOVE_FROM_CART } from "../constants";
 
 //Initial state
 const initialState = typeof window !== 'undefined'
@@ -13,7 +13,6 @@ export const cartReducer = (state = initialState, action) => {
         case ADD_TO_CART:
             const item = action.payload;
             const existItem = state.find(itemInCart => itemInCart.title === item.title);
-            console.log({ existItem }, { item })
             if (existItem) {
                 return state.map(itemInCart => itemInCart.title === existItem.title
                     ? item
@@ -24,8 +23,10 @@ export const cartReducer = (state = initialState, action) => {
             }
         case REMOVE_FROM_CART:
             const removedItem = action.payload;
-            return state.filter(itemInCart => itemInCart._id !== removedItem._id)
+            return state.filter(itemInCart => itemInCart._id !== removedItem._id);
+        case EMPTY_CART:
+            return action.payload;
         default:
-            return state
+            return state;
     }
 }

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
+import { userCart } from '../functions/user';
 
-function Cart() {
+function Cart({ history }) {
     const { cart, user } = useSelector(state => ({ ...state }));
     const dispatch = useDispatch();
     const gerTotal = () =>
@@ -11,8 +13,10 @@ function Cart() {
             return acc + item.count * item.price;
         }, 0);
 
-    const saveOrderToDB = (event) => {
-
+    const saveOrderToDB = () => {
+        userCart(cart, user.token)
+            .then(response => history.push("/checkout"))
+            .catch(err => toast.error(err.message));
     }
 
     const showCartItem = () => (
@@ -30,7 +34,7 @@ function Cart() {
                 </tr>
             </thead>
             <tbody>
-                {cart.map(prod =><ProductCardInCheckout key={prod._id} product={prod} /> )}
+                {cart.map(prod => <ProductCardInCheckout key={prod._id} product={prod} />)}
             </tbody>
         </table>
     )
