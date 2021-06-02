@@ -13,6 +13,7 @@ function Checkout() {
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState('');
     const [savedAddress, setSavedAddress] = useState(false);
+    const [coupon, setCoupon] = useState('');
 
     const user = useSelector(state => state.user)
     const dispatch = useDispatch();
@@ -55,51 +56,80 @@ function Checkout() {
             })
     }, []);
 
-    return (loading
-        ? <h4 className='pt-2'><LoadingOutlined />Loading ...</h4>
-        : <div className='row pt-2'>
-            <div className='col-md-6'>
-                <h4>Delivery Address</h4>
-                <ReactQuill
-                    theme="snow"
-                    value={address}
-                    onChange={setAddress} />
-                <button
-                    className='btn btn-primary mt-2'
-                    onClick={saveAddressToDB}
-                >
-                    Save
+    const applyDiscountCoupon = () => {
+
+    }
+
+    const showAddress = () => <div className='mb-5'>
+        <ReactQuill
+            theme="snow"
+            value={address}
+            onChange={setAddress} />
+        <button
+            className='btn btn-primary btn-raised mt-2'
+            onClick={saveAddressToDB}
+        >
+            Save
                 </button>
-                <h4>Got Coupon</h4>
+    </div>
+
+    const showProductSummary = () =>
+        products.map((prod) => <div>
+            <div key={prod._id} className='row'>
+                <p className='col-md-7'>{prod.product.title}{" "}</p>
+                <p className='col-md-2'>({prod.color} x {prod.count}){" "}</p>
+                <p className='col-md-1'>={" "}</p>
+                <p className='col-md-1'>{prod.product.price * prod.count}</p>
             </div>
-            <div className='col-md-6'>
-                <h4 className='mb-2'>Order Summary</h4>
-                <p>Products: {products.length}</p>
-                {products.map((prod) => <div>
-                    <div key={prod._id} className='row'>
-                        <p className='col-md-7'>{prod.product.title}{" "}</p>
-                        <p className='col-md-2'>({prod.color} x {prod.count}){" "}</p>
-                        <p className='col-md-1'>={" "}</p>
-                        <p className='col-md-1'>{prod.product.price * prod.count}</p>
-                    </div>
-                </div>)}
-                <p>Cart Total: {total}</p>
-                <div className='row'>
+        </div>)
+
+    const showApplyCoupon = (e) => <>
+        <input type="text"
+            onChange={() => setCoupon(e.target.value)}
+            value={coupon}
+            className='form-control'
+        />
+        <button onClick={applyDiscountCoupon}
+            className='btn btn-primary btn-raised mt-2'
+        >
+            Apply
+        </button>
+    </>
+
+    return (
+        <div className='container-fluid'>
+            { loading
+                ? <h4 className='pt-2'><LoadingOutlined />Loading ...</h4>
+                : <div className='row pt-2'>
                     <div className='col-md-6'>
-                        <button
-                            disabled={!savedAddress || !products.length}
-                            className='btn btn-primary'>Place Order</button>
+                        <h4>Delivery Address</h4>
+                        {showAddress()}
+                        <h4>Got Coupon</h4>
+                        {showApplyCoupon()}
                     </div>
                     <div className='col-md-6'>
-                        <button
-                            className='btn btn-primary'
-                            disabled={!products.length}
-                            onClick={emptyCart}>
-                            Empty Order
+                        <h4 className='mb-2'>Order Summary</h4>
+                        <p>Products: {products.length}</p>
+                        {showProductSummary()}
+                        <p>Cart Total: {total}</p>
+                        <div className='row'>
+                            <div className='col-md-6'>
+                                <button
+                                    disabled={!savedAddress || !products.length}
+                                    className='btn btn-primary'>Place Order</button>
+                            </div>
+                            <div className='col-md-6'>
+                                <button
+                                    className='btn btn-primary'
+                                    disabled={!products.length}
+                                    onClick={emptyCart}>
+                                    Empty Order
                             </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

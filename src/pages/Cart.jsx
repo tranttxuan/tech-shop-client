@@ -78,7 +78,7 @@ function Cart({ history }) {
                             ? <button
                                 onClick={saveOrderToDB}
                                 disabled={!cart.length}
-                                className='btn btn-sm btn-primary btn-block mt-2'>
+                                className='btn btn-sm btn-primary btn-block btn-raised mt-2'>
                                 Proceed to checkout
                             </button>
                             : <button className='btn btn-sm btn-primary btn-block mt-2'>

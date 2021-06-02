@@ -34,6 +34,7 @@ import { signin } from './actions/userActions';
 import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CreateCoupon from './pages/admin/coupon/CreateCoupon';
 
 function App() {
     const dispatch = useDispatch();
@@ -90,6 +91,8 @@ function App() {
                 <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
                 <AdminRoute exact path="/admin/products" component={AllProducts} />
 
+                <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
+                
                 {/* public routes  */}
                 <Route exact path="/product/:slug" component={Product} />
                 <Route exact path="/category/:slug" component={CategoryPage} />
