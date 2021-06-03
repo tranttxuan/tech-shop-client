@@ -9,4 +9,6 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const EMPTY_CART = 'EMPTY_CART';
 export const SET_VISIBLE = 'SET_VISIBLE';
 
+export const COUPON_APPLIED = 'COUPON_APPLIED';
+
 export const PRICE_RANGE = [0, 5000];

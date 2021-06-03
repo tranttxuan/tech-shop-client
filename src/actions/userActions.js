@@ -1,4 +1,4 @@
-import { LOGGED_IN_USER, LOGOUT } from "../constants"
+import { COUPON_APPLIED, LOGGED_IN_USER, LOGOUT } from "../constants"
 
 export const signin = (email, name, role, _id, token) => (dispatch) => {
     dispatch({
@@ -13,5 +13,12 @@ export const signout = () => (dispatch) => {
     dispatch({
         type: LOGOUT,
         payload: null
+    });
+}
+
+export const applyCouponAction = (state) => (dispatch) => {
+    dispatch({
+        type: COUPON_APPLIED,
+        payload: state
     });
 }

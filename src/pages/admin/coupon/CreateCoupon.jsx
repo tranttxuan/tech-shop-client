@@ -102,6 +102,8 @@ function CreateCoupon() {
                         <div className='form-group'>
                             <label className='text-muted'>Discount %</label>
                             <input
+                                min='0'
+                                max='100'
                                 type='number'
                                 className='form-control'
                                 value={discount}
@@ -121,7 +123,7 @@ function CreateCoupon() {
                         <button className='btn btn-primary'>Save</button>
                     </form>
                     <br />
-                    <h4>{coupons.length} Coupon{coupons.length <2 ? '':'s'}</h4>
+                    <h4>{coupons.length} Coupon{coupons.length < 2 ? '' : 's'}</h4>
                     <table className='table table-bordered'>
                         <thead className='thead-light'>
                             <tr>
