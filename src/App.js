@@ -35,6 +35,7 @@ import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import CreateCoupon from './pages/admin/coupon/CreateCoupon';
+import Payment from './pages/Payment';
 
 function App() {
     const dispatch = useDispatch();
@@ -103,6 +104,7 @@ function App() {
 
                 {/* Checkout Route  */}
                 <UseRoute exact path="/checkout" component={Checkout} />
+                <UseRoute exact path="/payment" component={Payment} />
             </Switch>
         </>
     );
