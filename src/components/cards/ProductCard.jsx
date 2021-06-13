@@ -29,7 +29,7 @@ function ProductCard({ product }) {
                         <br />
                         View Product
                     </Link>,
-                    <AddToCart product={product} />,
+                    <AddToCart product={product}/>,
                 ]}
             >
                 <Card.Meta

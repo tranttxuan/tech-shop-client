@@ -17,11 +17,11 @@ function AddToCart({ product }) {
     }
     return (
         <Tooltip title={toolTip} color='green'>
-            <p role="button"  onClick={handleAddToCart}>
-                <ShoppingCartOutlined className="text-success" />
+            <a href='#addToCard' role="button" onClick={handleAddToCart} disabled={product.quantity < 1}>
+                <ShoppingCartOutlined className={product.quantity < 1 ? "text-danger" : "text-success"} />
                 <br />
-            Add to Card
-        </p>
+                {product.quantity < 1 ? 'Out of stock' : 'Add to Card'}
+            </a>
         </Tooltip>
     )
 }

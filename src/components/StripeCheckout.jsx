@@ -6,6 +6,9 @@ import { createPaymentIntent } from '../functions/stripe';
 import { Link } from 'react-router-dom';
 import { Card } from "antd";
 import { CheckOutlined, DollarOutlined } from '@ant-design/icons';
+import { createOrder, emptyUserCart } from '../functions/user';
+import { removeUserCart } from '../actions/cartActions';
+import { applyCouponAction } from '../actions/userActions';
 
 function StripeCheckout() {
     const stripe = useStripe();
@@ -18,7 +21,7 @@ function StripeCheckout() {
     const [clientSecret, setClientSecret] = useState('');
     const [cartTotal, setCartTotal] = useState(0);
     const [payable, setPayable] = useState(0);
-    const [totalAfterDiscount, setTotalAfterDiscount]= useState(0);
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
 
     const dispatch = useDispatch();
     const { user, coupon } = useSelector(state => ({ ...state }));
@@ -34,7 +37,7 @@ function StripeCheckout() {
                 setTotalAfterDiscount(totalAfterDiscount);
             })
             .catch(err => console.log(err))
-    }, []);
+    }, [coupon, user.token]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,13 +57,19 @@ function StripeCheckout() {
                 }
             }
         })
-
-        console.log('check payload ----', payload);
         if (payload.error) {
             setError(`Payment failed ${payload.error.message}`);
             setProcessing(false)
         } else {
-            console.log(JSON.stringify(payload, null, 4));
+            createOrder(payload, user.token)
+                .then(res => {
+                    dispatch(removeUserCart());
+                    dispatch(applyCouponAction(false));
+                    emptyUserCart(user.token)
+                        .then(response => console.log(response))
+                        .catch(response => console.log(response))
+                })
+                .catch(err => console.log(err))
             setError(null);
             setProcessing(false);
             setSucceeded(true);
@@ -96,18 +105,18 @@ function StripeCheckout() {
 
     return (
         <>
-        {
-            !succeeded && <div>
-                {coupon && totalAfterDiscount !== undefined 
-                ? <p className='alert alert-success'>Total after discount: ${totalAfterDiscount}</p> 
-                : <p className='alert alert-danger'>No coupon applied</p>
-                }
-            </div> 
-        }
+            {
+                !succeeded && <div>
+                    {coupon && totalAfterDiscount !== undefined
+                        ? <p className='alert alert-success'>Total after discount: ${totalAfterDiscount}</p>
+                        : <p className='alert alert-danger'>No coupon applied</p>
+                    }
+                </div>
+            }
             <div className='text-center pb-5'>
                 <Card
                     cover={
-                        <img style={{ height: '200px', objectFit: 'cover', marginBottom: '-50px' }} />
+                        <img style={{ height: '200px', objectFit: 'cover', marginBottom: '-50px' }} alt='img-card' />
                     }
                     actions={[
                         <>
