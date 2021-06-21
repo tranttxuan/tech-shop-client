@@ -24,7 +24,7 @@ export const saveUserAddress = async (authtoken, address) => {
 
 export const applyCoupon = async (coupon, authtoken) => {
     return await axios.post(`${process.env.REACT_APP_API}/user/cart/coupon`,
-        {name: coupon},
+        { name: coupon },
         {
             headers: { authtoken }
         })
@@ -32,7 +32,14 @@ export const applyCoupon = async (coupon, authtoken) => {
 
 export const createOrder = async (stripeResponse, authtoken) => {
     return await axios.post(`${process.env.REACT_APP_API}/user/order`,
-        {stripeResponse},
+        { stripeResponse },
+        {
+            headers: { authtoken }
+        })
+};
+
+export const getUserOrders = async (authtoken) => {
+    return await axios.get(`${process.env.REACT_APP_API}/user/order`,
         {
             headers: { authtoken }
         })
