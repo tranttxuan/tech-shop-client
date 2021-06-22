@@ -59,7 +59,7 @@ function Checkout({ history }) {
                 setLoading(false);
                 console.log(err)
             })
-    }, []);
+    }, [user.token]);
 
     const applyDiscountCoupon = () => {
         applyCoupon(coupon.toUpperCase(), user.token)

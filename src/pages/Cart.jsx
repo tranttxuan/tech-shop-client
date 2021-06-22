@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
@@ -7,7 +7,6 @@ import { userCart } from '../functions/user';
 
 function Cart({ history }) {
     const { cart, user } = useSelector(state => ({ ...state }));
-    const dispatch = useDispatch();
     const gerTotal = () =>
         cart.reduce((acc, item) => {
             return acc + item.count * item.price;
