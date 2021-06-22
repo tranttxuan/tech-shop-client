@@ -1,7 +1,7 @@
 import { Card } from "antd";
 import React from "react";
 import { HeartOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import noImage from "../../images/no_image_available.png";
@@ -11,25 +11,40 @@ import StarRatings from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
 import AverageRating from "../modal/AverageRating";
 import AddToCart from "../forms/AddToCart";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToWishlist } from "../../functions/user";
 
 const { TabPane } = Tabs;
 
-function SingleProduct({ product, onStarClick, star}) {
+function SingleProduct({ product, onStarClick, star }) {
     const { title, description, images, _id } = product;
+    const history = useHistory();
+    const user = useSelector(state => state.user)
 
     const handleTabs = () => { };
+
+    const handleAddToWishlist = () => {
+        addToWishlist(product._id, user.token)
+            .then(res => {
+                toast.success('Add to wishlist');
+                history.push("/user/wishlist");
+            })
+            .catch(err => toast.error('Not added this product to wishlist'))
+    }
+
     return (
         <>
             <div className="col-md-7">
                 {images && images.length ? (
                     <Carousel showArrows={true} autoPlay infiniteLoop>
                         {images.map((image, id) => (
-                            <img src={image.url} key={image.public_id} alt={`product-${id}`}/>
+                            <img src={image.url} key={image.public_id} alt={`product-${id}`} />
                         ))}
                     </Carousel>
                 ) : (
                     <Card
-                        cover={<img src={noImage} className="p-1 card-image" alt="no-img"/>}
+                        cover={<img src={noImage} className="p-1 card-image" alt="no-img" />}
                     />
                 )}
                 <Tabs defaultActiveKey="1" onChange={handleTabs} type="Card">
@@ -56,11 +71,11 @@ function SingleProduct({ product, onStarClick, star}) {
                     bordered
                     actions={[
                         <AddToCart product={product} />,
-                        <Link to={`/`}>
+                        <a onClick={handleAddToWishlist}>
                             <HeartOutlined className="text-info" />
                             <br />
 							Add to Wishlist
-						</Link>,
+						</a>,
                         <RatingModal>
                             <StarRatings
                                 allowHalf

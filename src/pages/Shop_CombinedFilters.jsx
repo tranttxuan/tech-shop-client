@@ -211,7 +211,7 @@ function Shop_CombinedFilters() {
     useEffect(() => {
         console.log("here")
         fetchProducts(queries);
-    }, [queries]);
+    }, []);
 
     const handleRemoveFilter = () => {
         setPrice(PRICE_RANGE);
