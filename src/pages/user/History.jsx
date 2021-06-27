@@ -1,6 +1,6 @@
-import { CheckCircleOutlined, CloseCircleOutlined, ShopTwoTone } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo';
 import UserNav from '../../components/nav/UserNav';
 import { getUserOrders } from '../../functions/user';
@@ -9,7 +9,6 @@ import Invoice from '../../components/order/Invoice';
 
 const History = () => {
     const [orders, setOrders] = useState([]);
-    const dispatch = useDispatch();
     const user = useSelector(state => state.user);
 
     useEffect(() => {
