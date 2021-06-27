@@ -34,13 +34,13 @@ function Banner() {
                             </Link>
                         </div>
                         <div className='col-md-8 top-down right-left'>
-                            <img src={Image3} style={{ objectFit: '' }} alt='banner-1'/>
+                            <img src={Image3} style={{ objectFit: 'scale-down' }} alt='banner-1'/>
                         </div>
                     </div>
 
                     <div className={`row slide ${active === 1 && 'active'}`}>
                         <div className='col-md-8 top-down left-right'>
-                            <img src={Image1} style={{ objectFit: 'fill' }} alt='banner-2'/>
+                            <img src={Image1} style={{ objectFit: 'scale-down' }} alt='banner-2'/>
                         </div>
                         <div className='col-md-4 d-flex justify-content-center align-items-start flex-column text-left mt-5 mb-5'>
                             <h2 className='top-down trans-delay-0-2'>Finishing touches</h2>
@@ -62,7 +62,7 @@ function Banner() {
                             </Link>
                         </div>
                         <div className='col-md-8 top-down'>
-                            <img src={Image4} style={{ objectFit: 'fill' }} alt='banner-3'/>
+                            <img src={Image4} style={{ objectFit: 'scale-down' }} alt='banner-3'/>
                         </div>
                     </div>
                 </Carousel>
