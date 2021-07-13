@@ -3,12 +3,13 @@ import './StripeCheckout.css';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useDispatch, useSelector } from 'react-redux';
 import { createPaymentIntent } from '../functions/stripe';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Card } from "antd";
 import { CheckOutlined, DollarOutlined } from '@ant-design/icons';
 import { createOrder, emptyUserCart } from '../functions/user';
 import { removeUserCart } from '../actions/cartActions';
 import { applyCouponAction } from '../actions/userActions';
+import Image from "./../assets/payment_methods.jpeg";
 
 function StripeCheckout() {
     const stripe = useStripe();
@@ -26,10 +27,14 @@ function StripeCheckout() {
     const dispatch = useDispatch();
     const { user, coupon } = useSelector(state => ({ ...state }));
 
+    const history = useHistory();
+
     useEffect(() => {
         createPaymentIntent(user.token, coupon)
             .then(res => {
-                console.log('----', res.data);
+                if(typeof res.data === "string"){
+                    history.push("/cart");
+                }
                 const { clientSecret, cartTotal, payable, totalAfterDiscount } = res.data
                 setClientSecret(clientSecret);
                 setCartTotal(cartTotal);
@@ -77,11 +82,7 @@ function StripeCheckout() {
     }
 
     const handleChange = (e) => {
-        // listen for change in card element
-        // and display any errors as the customer types hos card details 
-        //  disable pay button if errors
         setDisabled(e.empty);
-        // show error message
         setError(e.error ? e.error.message : '')
     }
 
@@ -116,16 +117,16 @@ function StripeCheckout() {
             <div className='text-center pb-5'>
                 <Card
                     cover={
-                        <img style={{ height: '200px', objectFit: 'cover', marginBottom: '-50px' }} alt='img-card' />
+                        <img src={Image} style={{ height: '200px', objectFit: 'cover', marginBottom: '-50px' }} alt='img-card' />
                     }
                     actions={[
                         <>
                             <DollarOutlined className='text-info' />
-                            <br /> Total: ${cartTotal}
+                            <br /> Total: <span className='font-weight-bold'>${cartTotal}</span>
                         </>,
                         <>
                             <CheckOutlined className='text-info' />
-                            <br /> Total payable: ${payable}
+                            <br /> Total payable: <span>${payable}</span>
                         </>,
                     ]}
                 />
@@ -143,7 +144,7 @@ function StripeCheckout() {
                 </button>
                 {error && <div className='card-error' role='alert'>{error}</div>}
                 <br />
-                <p className={succeeded ? 'result-message' : 'result-message hidden'}>
+                <p className={succeeded ? 'result-message font-weight-bold' : 'result-message hidden'}>
                     Payment Successful.{" "}
                     <Link to="/user/history">See it in your purchase history</Link>
                 </p>

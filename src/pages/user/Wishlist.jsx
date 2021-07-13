@@ -12,7 +12,6 @@ const Wishlist = () => {
     const loadWishlist = useCallback(() => {
         getWishlist(user.token)
             .then(res => {
-                console.log(res.data);
                 setWishlist(res.data.wishlist)
             })
             .catch(error => console.log(error));

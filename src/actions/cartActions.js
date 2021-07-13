@@ -5,7 +5,6 @@ export const addProductToCart = (item) => (dispatch, getState) => {
         type: ADD_TO_CART,
         payload: item
     })
-    console.log('object', getState().cart)
     if (typeof window !== 'undefined') {
         localStorage.setItem('cart', JSON.stringify(getState().cart));
     }
@@ -16,7 +15,6 @@ export const removeProductToCart = (item) => (dispatch, getState) => {
         type: REMOVE_FROM_CART,
         payload: item
     })
-    console.log('object', getState().cart)
     if (typeof window !== 'undefined') {
         localStorage.setItem('cart', JSON.stringify(getState().cart));
     }

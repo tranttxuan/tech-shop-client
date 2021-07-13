@@ -51,9 +51,10 @@ function Checkout({ history }) {
         getUserCart(user.token)
             .then(cart => {
                 setLoading(false);
-                const { products, cartTotal } = cart.data;
+                const { products, cartTotal, orderedBy } = cart.data;
                 setProducts(products);
                 setTotal(cartTotal);
+                setAddress(orderedBy.address)
             })
             .catch(err => {
                 setLoading(false);
@@ -64,7 +65,6 @@ function Checkout({ history }) {
     const applyDiscountCoupon = () => {
         applyCoupon(coupon.toUpperCase(), user.token)
             .then(response => {
-                console.log(response.data);
                 if (response.data) {
                     setTotalAfterDiscount(response.data.totalAfterDiscount);
                     dispatch(applyCouponAction(true));
@@ -82,18 +82,21 @@ function Checkout({ history }) {
         setCoupon((e.target.value))
     }
 
-    const showAddress = () => <div className='mb-5'>
-        <ReactQuill
-            theme="snow"
-            value={address}
-            onChange={setAddress} />
-        <button
-            className='btn btn-primary btn-raised mt-2'
-            onClick={saveAddressToDB}
-        >
-            Save
-                </button>
-    </div>
+    const showAddress = () => {
+        const noAddress = address.replace(/<[^>]+>/g, '') === "";
+
+        return <div className='mb-5'>
+            <ReactQuill
+                theme="snow"
+                formats='bold'
+                value={address}
+                onChange={setAddress} />
+            <button className='btn btn-primary btn-raised mt-2' onClick={saveAddressToDB}>
+                {noAddress ? 'Save' : 'Confirm'}
+            </button>
+            {noAddress ? <span>{" "} Please enter your address</span> : <span>{" "} Please confirm your address</span>}
+        </div>
+    }
 
     const showProductSummary = () =>
         products.map((prod) =>
@@ -145,7 +148,8 @@ function Checkout({ history }) {
                                 <button
                                     onClick={() => history.push('/payment')}
                                     disabled={!savedAddress || !products.length}
-                                    className='btn btn-primary'>Place Order</button>
+                                    style={{ pointerEvents: !savedAddress || !products.length && "none" }}
+                                    className='btn btn-primary btn-raised'>Place Order</button>
                             </div>
                             <div className='col-md-6'>
                                 <button

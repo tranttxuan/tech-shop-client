@@ -35,6 +35,7 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values, setValues, hand
                     type="number"
                     className="form-control"
                     value={price}
+                    step="0.01"
                     min={0}
                     onChange={handleChange}
                 />

@@ -1,13 +1,13 @@
 import { BgColorsOutlined, BranchesOutlined, DollarOutlined, DownSquareOutlined, LoadingOutlined, ShoppingOutlined, StarOutlined, TagOutlined } from '@ant-design/icons'
-import {  Button, Checkbox, Menu, Radio, Slider } from 'antd'
+import { Button, Checkbox, Menu, Radio, Slider } from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
 import Star from '../components/forms/Star'
 import { PRICE_RANGE } from '../constants'
 import { getCategories } from '../functions/category'
-import { fetchProductByFilter} from '../functions/product'
+import { fetchProductByFilter } from '../functions/product'
 import { getSubs } from '../functions/sub'
 import { removeSearchValue } from '../actions/searchActions';
 
@@ -31,7 +31,7 @@ function Shop_CombinedFilters() {
     const dispatch = useDispatch();
     const search = useSelector(state => state.search);
     const { text } = search;
-
+    
     // loading all category and subs
     const loadCategories = useCallback(() => {
         getCategories()
@@ -48,6 +48,11 @@ function Shop_CombinedFilters() {
     useEffect(() => {
         loadCategories();
         loadSubs();
+        return () => { 
+            setCategories([]);
+            setSubs([])
+         }
+
     }, [loadCategories, loadSubs]);
 
     //function for loading products based on queries
@@ -56,7 +61,6 @@ function Shop_CombinedFilters() {
             .then(products => {
                 setProducts(products.data);
                 setLoading(false);
-                console.log(products.data)
             })
             .catch(err => {
                 setLoading(false);
@@ -69,18 +73,16 @@ function Shop_CombinedFilters() {
         setPrice(price);
         setTimeout(() => {
             setQueries({ ...(queries && queries), price });
-        }, 300)
+        }, 500)
     }
 
     //****************** handle filter by input search *******************
     useEffect(() => {
-        console.log(Object.keys(queries));
         const delayed = setTimeout(() => {
             setQueries({ ...(queries && queries), text });
         }, 300);
         return () => clearTimeout(delayed);
     }, [text, queries]);
-
 
     //****************** handle filter by category *******************
     //handle check for categories
@@ -89,7 +91,6 @@ function Shop_CombinedFilters() {
         //use categoryId to find category name
         let categoryName = checkedCategories.map(checkedId => categories.filter(cat => cat._id === checkedId)[0].name);
         setCategoryNames(categoryName);
-        console.log({ categoryName })
         setCategoryIds(checkedCategories);
         setQueries({ ...(queries && queries), category: checkedCategories });
     };
@@ -185,6 +186,7 @@ function Shop_CombinedFilters() {
                 </div>
             ))}
         </Radio.Group>
+        
     //****************** handle filter by Shipping *******************
     const handleShipping = (e) => {
         setShipping(e.target.value);
@@ -209,9 +211,10 @@ function Shop_CombinedFilters() {
 
     //loading products
     useEffect(() => {
-        console.log("here")
-        fetchProducts(queries);
-    }, []);
+        setTimeout(() => {
+            fetchProducts(queries);
+        }, 1000)
+    }, [queries]);
 
     const handleRemoveFilter = () => {
         setPrice(PRICE_RANGE);
@@ -284,40 +287,40 @@ function Shop_CombinedFilters() {
                 </div>
                 <div className='col-md-9 pt-2'>
                     <div className="pb-2">
-                            <h4 className='text-danger'>Filter Commands:</h4>
+                        <h4 className='text-danger'>Filter Commands:</h4>
 
                         <div className="d-inline-flex align-items-center">
                             <p className='m-0'>
-                            {
-                                price.length !== 0 &&
-                                <>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></>
-                            }
-                            {
-                                text && <> - Text search : <span className='text-info'>{text}</span></>
-                            }
-                            {
-                                categoryNames.length !== 0 &&
-                                <> - Categories:
+                                {
+                                    price.length !== 0 &&
+                                    <>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></>
+                                }
+                                {
+                                    text && <> - Text search : <span className='text-info'>{text}</span></>
+                                }
+                                {
+                                    categoryNames.length !== 0 &&
+                                    <> - Categories:
                                 {categoryNames.map(cat => <span className='text-info'> {`${cat}, `}</span>)}
-                                </>
-                            }
-                            {
-                                stars !== 0 && <> - Average Rating : <span className='text-info'>{stars}</span></>
-                            }
-                            {
-                                sub && <> - Sub : <span className='text-info'>{sub}</span></>
-                            }
-                            {
-                                brand && <> - Brand : <span className='text-info'>{brand}</span></>
-                            }
-                            {
-                                color && <> - Color : <span className='text-info'>{color}</span></>
-                            }
-                            {
-                                shipping && <> - Shipping : <span className='text-info'>{shipping}</span></>
-                            }
-                            {' '}
-                            <Button onClick={handleRemoveFilter} type="dashed">Remove filter</Button>
+                                    </>
+                                }
+                                {
+                                    stars !== 0 && <> - Average Rating : <span className='text-info'>{stars}</span></>
+                                }
+                                {
+                                    sub && <> - Sub : <span className='text-info'>{sub}</span></>
+                                }
+                                {
+                                    brand && <> - Brand : <span className='text-info'>{brand}</span></>
+                                }
+                                {
+                                    color && <> - Color : <span className='text-info'>{color}</span></>
+                                }
+                                {
+                                    shipping && <> - Shipping : <span className='text-info'>{shipping}</span></>
+                                }
+                                {' '}
+                                <Button onClick={handleRemoveFilter} type="dashed">Remove filter</Button>
                             </p>
                         </div>
                     </div>

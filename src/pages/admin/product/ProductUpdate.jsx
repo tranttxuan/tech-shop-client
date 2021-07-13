@@ -50,7 +50,7 @@ const ProductUpdate = ({ match, history }) => {
                 setArrayOfSubs(arr);
             })
             .catch((err) => console.log(err));
-    }, [slug, values]);
+    }, []);
 
     const loadCategories = useCallback(() => {
         getCategories()

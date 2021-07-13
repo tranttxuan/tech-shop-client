@@ -19,6 +19,9 @@ function SubCategoryList() {
                 console.log(err);
                 setLoading(false)
             })
+            return () => {
+                setSubs([]);
+              };
     }, []);
     return (
         <>

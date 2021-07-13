@@ -1,42 +1,12 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import './App.css';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { signin } from './actions/userActions';
 import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
 import { currentUser } from './functions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
-
-// import Home from './pages/Home';
-// import Login from './pages/auth/Login';
-// import Register from './pages/auth/Register';
-// import Header from './components/nav/Header';
-// import SideDrawer from './components/drawer/SideDrawer';
-// import RegisterComponent from './pages/auth/RegisterComponent';
-// import ForgotPassword from './pages/auth/ForgotPassword';
-// import History from './pages/user/History';
-// import UseRoute from './components/routes/UseRoute';
-// import Wishlist from './pages/user/Wishlist';
-// import Password from './pages/user/Password';
-// import AdminRoute from './components/routes/AdminRoute';
-// import AdminDashboard from './pages/admin/AdminDashboard';
-// import CategoryCreate from './pages/admin/category/CategoryCreate';
-// import CategoryUpdate from './pages/admin/category/CategoryUpdate';
-// import SubCreate from './pages/admin/sub/SubCreate';
-// import SubUpdate from './pages/admin/sub/SubUpdate';
-// import AllProducts from './pages/admin/product/AllProducts';
-// import ProductUpdate from './pages/admin/product/ProductUpdate';
-// import ProductCreate from './pages/admin/product/ProductCreate';
-// import Product from './pages/Product';
-// import CategoryPage from './pages/category/CategoryPage';
-// import SubPage from './pages/admin/sub/SubPage';
-// import Shop_CombinedFilters from './pages/Shop_CombinedFilters';
-// import Cart from './pages/Cart';
-// import Checkout from './pages/Checkout';
-// import CreateCoupon from './pages/admin/coupon/CreateCoupon';
-// import Payment from './pages/Payment';
 
 const Login = lazy(() => import('./pages/auth/Login'));
 
@@ -67,7 +37,6 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const CreateCoupon = lazy(() => import('./pages/admin/coupon/CreateCoupon'));
 const Payment = lazy(() => import('./pages/Payment'));
-
 
 function App() {
     const dispatch = useDispatch();

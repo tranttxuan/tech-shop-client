@@ -78,14 +78,14 @@ const Header = () => {
             {user &&
                 <SubMenu key="user" icon={<SettingOutlined />} title={user.email && user.email.split("@")[0]} className="float-right">
                     {(user && user.role === "subscriber") &&
-                        <Item key="dashboard">
+                        <Item key="dashboard-subscriber">
                             <Link to="/user/history">
                                 Dashboard
               </Link>
                         </Item>
                     }
                     {(user && user.role === "admin") &&
-                        <Item key="dashboard">
+                        <Item key="dashboard-admin">
                             <Link to="/admin/dashboard">
                                 Dashboard
                             </Link>

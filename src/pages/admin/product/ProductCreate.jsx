@@ -35,7 +35,7 @@ const ProductCreate = () => {
     getCategories()
       .then((list) => setValues({ ...values, categories: list.data }))
       .catch((error) => toast.error(error.response.data.message));
-  },[values]);
+  },[]);
 
   useEffect(() => {
     loadingCategories();
@@ -64,7 +64,6 @@ const ProductCreate = () => {
         window.location.reload();
       })
       .catch((error) => {
-        // console.log(error.response.data.message)
         toast.error(error.response.data.message);
       });
   };
