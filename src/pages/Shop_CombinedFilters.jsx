@@ -99,7 +99,7 @@ function Shop_CombinedFilters() {
     const showCategories = () => (
         <Checkbox.Group onChange={handleCheckCategory} value={categoryIds}>
             {categories.map((category) => (
-                <div key={category._id} >
+                <div key={`category-${category._id}`} >
                     <Checkbox
                         className="pb-2 pl-4 pr-4"
                         value={category._id}
@@ -136,7 +136,7 @@ function Shop_CombinedFilters() {
         <div className="row ml-4 mr-4">
             {subs.map((sub) =>
                 <div
-                    key={sub._id}
+                    key={`sub-${sub._id}`}
                     onClick={() => handleSub(sub._id)}
                     className="p-1 m-1 badge badge-secondary"
                     style={{ cursor: 'pointer' }}
