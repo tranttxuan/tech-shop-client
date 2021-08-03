@@ -1,0 +1,56 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Login",
+    "line": 1,
+    "id": "login",
+    "tags": [],
+    "uri": "login.feature",
+    "elements": [
+      {
+        "id": "login;admin-logs-in-successful",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Admin logs in successful",
+        "tags": [
+          {
+            "name": "@login",
+            "line": 2
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "I login as admin",
+            "result": {
+              "status": "failed",
+              "duration": 484000000,
+              "error_message": "TypeError: cy.findByPlaceholderText is not a function\n    at Context.eval (http://localhost:3000/__cypress/tests?p=cypress/integration/login.feature:73:6)\n    at Context.resolveAndRunStepDefinition (http://localhost:3000/__cypress/tests?p=cypress/integration/login.feature:8193:9)\n    at Context.eval (http://localhost:3000/__cypress/tests?p=cypress/integration/login.feature:7522:35)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "I should be on the dashboard page with url /admin/dashboard",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "I'm logged",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

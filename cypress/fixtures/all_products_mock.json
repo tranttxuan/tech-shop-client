@@ -1,0 +1,92 @@
+{
+    "products": [
+        {
+            "id": "6094f673f8d90c06fab856dc",
+            "subs": [
+                {
+                    "id": "609311437b7d0950df4ff8ee"
+                }
+            ],
+            "sold": "14",
+            "images": [
+                {
+                    "public_id": "p6w736akgplnexiapyyb",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620375130/p6w736akgplnexiapyyb.jpg"
+                },
+                {
+                    "public_id": "aqkca123co23ndlb3chm",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620375130/aqkca123co23ndlb3chm.jpg"
+                }
+            ],
+            "title": "111Apple Mac Mini MGNT3LL/A (Late 2020) Desktop Computer",
+            "description": "111The Apple M1 chip takes Mac mini, the most versatile, do-it-all Mac desktop, to a whole new level of performance. With up to 3x faster CPU performance, up to 6x faster graphics, a powerful Neural Engine with up to 15x faster machine learning, and superfast unified memory - all in an ultracompact design. So you can create, work, and play on Mac mini with speed and power beyond anything you ever imagined.",
+            "price": 8000,
+            "category": {
+                "id": "6091ba8c3bbb6908f2e996b2"
+            },
+            "shipping": "No",
+            "quantity": 493,
+            "color": "Silver",
+            "brand": "Apple",
+            "slug": "111apple-mac-mini-mgnt3lla-(late-2020)-desktop-computer",
+            "ratings": [],
+            "createdAt": {
+                "date": "2021-05-07T08:12:35.096Z"
+            },
+            "updatedAt": {
+                "date": "2021-07-13T20:59:29.756Z"
+            }
+        },
+        {
+            "id": "609bef7d68f0d4e0b5bb266d",
+            "subs": [
+                {
+                    "id": "6093115b7b7d0950df4ff8ef"
+                },
+                {
+                    "id": "609311187b7d0950df4ff8ec"
+                },
+                {
+                    "id": "6093112e7b7d0950df4ff8ed"
+                }
+            ],
+            "sold": "6",
+            "images": [
+                {
+                    "public_id": "w6wzu0rv6zc65swwdwsp",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620832071/w6wzu0rv6zc65swwdwsp.jpg"
+                },
+                {
+                    "public_id": "jowmj2fnnsneupnk3wvv",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620832071/jowmj2fnnsneupnk3wvv.jpg"
+                },
+                {
+                    "public_id": "gfnwbhlggz5hjqs8hop9",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620832071/gfnwbhlggz5hjqs8hop9.jpg"
+                },
+                {
+                    "public_id": "ncpab2d0mofz97qtofnx",
+                    "url": "https://res.cloudinary.com/dtahpsrod/image/upload/v1620832071/ncpab2d0mofz97qtofnx.jpg"
+                }
+            ],
+            "title": "HP 1",
+            "description": "one of best Apple products",
+            "price": 500,
+            "category": {
+                "id": "6091ba8c3bbb6908f2e996b2"
+            },
+            "shipping": "No",
+            "quantity": 44,
+            "color": "White",
+            "brand": "HP",
+            "slug": "hp-1",
+            "ratings": [],
+            "createdAt": {
+                "date": "2021-05-12T15:08:45.828Z"
+            },
+            "updatedAt": {
+                "date": "2021-06-16T20:50:15.786Z"
+            }
+        }
+    ]
+}
