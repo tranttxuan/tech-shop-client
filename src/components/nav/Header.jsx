@@ -45,7 +45,8 @@ const Header = () => {
     }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
+        <div id="header">
+        <Menu onClick={handleClick} selectedKeys={current} mode="horizontal" data-id="header">
             <Item key="home" icon={<AppstoreOutlined />}>
                 <Link to="/">Home</Link>
             </Item>
@@ -76,12 +77,12 @@ const Header = () => {
             }
 
             {user &&
-                <SubMenu key="user" icon={<SettingOutlined />} title={user.email && user.email.split("@")[0]} className="float-right">
+                <SubMenu aria-label="current-user" key="user" icon={<SettingOutlined />} title={user.email && user.email.split("@")[0]} className="float-right">
                     {(user && user.role === "subscriber") &&
                         <Item key="dashboard-subscriber">
                             <Link to="/user/history">
                                 Dashboard
-              </Link>
+                        </Link>
                         </Item>
                     }
                     {(user && user.role === "admin") &&
@@ -92,6 +93,7 @@ const Header = () => {
                         </Item>
                     }
                     <Item key="logout"
+                        data-id="logout"
                         icon={<LogoutOutlined />}
                         onClick={handleLogout}>
                         Logout
@@ -102,6 +104,7 @@ const Header = () => {
                 <Search />
             </span>
         </Menu>
+        </div>
     );
 };
 

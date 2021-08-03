@@ -68,7 +68,7 @@ function App() {
                 <LoadingOutlined />  TRAN XUAN __ Project E-commerce
             </div>
         }>
-            <Header />
+            <Header/>
             <SideDrawer />
             <ToastContainer />
             <Switch>

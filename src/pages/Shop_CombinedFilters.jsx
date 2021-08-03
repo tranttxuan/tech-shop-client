@@ -31,7 +31,7 @@ function Shop_CombinedFilters() {
     const dispatch = useDispatch();
     const search = useSelector(state => state.search);
     const { text } = search;
-    
+
     // loading all category and subs
     const loadCategories = useCallback(() => {
         getCategories()
@@ -48,11 +48,13 @@ function Shop_CombinedFilters() {
     useEffect(() => {
         loadCategories();
         loadSubs();
-        return () => { 
+        if (text.length !== 0) {
+            setQueries({ ...queries, text });
+        }
+        return () => {
             setCategories([]);
             setSubs([])
-         }
-
+        }
     }, [loadCategories, loadSubs]);
 
     //function for loading products based on queries
@@ -79,10 +81,10 @@ function Shop_CombinedFilters() {
     //****************** handle filter by input search *******************
     useEffect(() => {
         const delayed = setTimeout(() => {
-            setQueries({ ...(queries && queries), text });
+            setQueries({ ...queries, text });
         }, 300);
         return () => clearTimeout(delayed);
-    }, [text, queries]);
+    }, [text]);
 
     //****************** handle filter by category *******************
     //handle check for categories
@@ -186,7 +188,7 @@ function Shop_CombinedFilters() {
                 </div>
             ))}
         </Radio.Group>
-        
+
     //****************** handle filter by Shipping *******************
     const handleShipping = (e) => {
         setShipping(e.target.value);
@@ -209,11 +211,11 @@ function Shop_CombinedFilters() {
             ))}
         </Radio.Group>
 
-    //loading products
+    // loading products
     useEffect(() => {
-        setTimeout(() => {
+        if (Object.keys(queries).length !== 0) {
             fetchProducts(queries);
-        }, 1000)
+        }
     }, [queries]);
 
     const handleRemoveFilter = () => {
@@ -234,9 +236,9 @@ function Shop_CombinedFilters() {
             <div className='row'>
                 <div className='col-md-3 pt-2'>
                     <h4>Search/Filters</h4>
-                    <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode='inline'>
-                        <SubMenu key='1' title={<span className='h6'><DollarOutlined />Price</span>}>
-                            <div>
+                    <Menu defaultOpenKeys={["Filter-1", "Filter-2", "Filter-3", "Filter-4"]} mode='inline'>
+                        <SubMenu key='Filter-1' title={<span className='h6'><DollarOutlined />Price</span>}>
+                            <div data-id='price-filter'>
                                 <Slider
                                     range
                                     tipFormatter={price => `$${price}`}
@@ -250,35 +252,35 @@ function Shop_CombinedFilters() {
                                 />
                             </div>
                         </SubMenu>
-                        <SubMenu key='2' title={<span className='h6'><DownSquareOutlined />Category</span>}>
-                            <div>
+                        <SubMenu key='Filter-2' title={<span className='h6'><DownSquareOutlined />Category</span>}>
+                            <div data-id='category-filter'>
                                 {showCategories()}
                             </div>
                         </SubMenu>
-                        <SubMenu key='3' title={<span className='h6'><StarOutlined />Ratings</span>}>
-                            <div>
+                        <SubMenu key='Filter-3' title={<span className='h6'><StarOutlined />Ratings</span>}>
+                            <div data-id='rating-filter'>
                                 {showStar()}
                             </div>
                         </SubMenu>
-                        <SubMenu key='4' title={<span className='h6'><TagOutlined />Sub Categories</span>}>
-                            <div>
+                        <SubMenu key='Filter-4' title={<span className='h6'><TagOutlined />Sub Categories</span>}>
+                            <div data-id='sub-category-filter'>
                                 {showSubCategories()}
                             </div>
                         </SubMenu>
 
-                        <SubMenu key='5' title={<span className='h6'><BranchesOutlined />Brand</span>}>
-                            <div>
+                        <SubMenu key='Filter-5' title={<span className='h6' aria-label='sidebar-brand'><BranchesOutlined />Brand</span>}>
+                            <div data-id='brand-filter'>
                                 {showBrand()}
                             </div>
                         </SubMenu>
 
-                        <SubMenu key='6' title={<span className='h6'><BgColorsOutlined />Color</span>}>
+                        <SubMenu key='Filter-6' title={<span className='h6'><BgColorsOutlined />Color</span>}>
                             <div>
                                 {showColor()}
                             </div>
                         </SubMenu>
 
-                        <SubMenu key='7' title={<span className='h6'><ShoppingOutlined />Shipping</span>}>
+                        <SubMenu key='Filter-7' title={<span className='h6'><ShoppingOutlined />Shipping</span>}>
                             <div>
                                 {showShipping()}
                             </div>
@@ -289,29 +291,29 @@ function Shop_CombinedFilters() {
                     <div className="pb-2">
                         <h4 className='text-danger'>Filter Commands:</h4>
 
-                        <div className="d-inline-flex align-items-center">
+                        <div className="d-inline-flex align-items-center" aria-label="filter-commands">
                             <p className='m-0'>
                                 {
                                     price.length !== 0 &&
-                                    <>Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></>
+                                    <span aria-label="price">Min price : <span className='text-info'>{price[0]}</span> - Max price : <span className='text-info'>{price[1]}</span></span>
                                 }
                                 {
                                     text && <> - Text search : <span className='text-info'>{text}</span></>
                                 }
                                 {
                                     categoryNames.length !== 0 &&
-                                    <> - Categories:
+                                    <span aria-label="category"> - Categories:
                                 {categoryNames.map(cat => <span className='text-info'> {`${cat}, `}</span>)}
-                                    </>
+                                    </span>
                                 }
                                 {
-                                    stars !== 0 && <> - Average Rating : <span className='text-info'>{stars}</span></>
+                                    stars !== 0 && <span aria-label="rating"> - Average Rating : <span className='text-info'>{stars}</span></span>
                                 }
                                 {
-                                    sub && <> - Sub : <span className='text-info'>{sub}</span></>
+                                    sub && <span aria-label="sub-category"> - Sub : <span className='text-info'>{sub}</span></span>
                                 }
                                 {
-                                    brand && <> - Brand : <span className='text-info'>{brand}</span></>
+                                    brand && <span aria-label='brand'> - Brand : <span className='text-info'>{brand}</span></span>
                                 }
                                 {
                                     color && <> - Color : <span className='text-info'>{color}</span></>
@@ -320,7 +322,7 @@ function Shop_CombinedFilters() {
                                     shipping && <> - Shipping : <span className='text-info'>{shipping}</span></>
                                 }
                                 {' '}
-                                <Button onClick={handleRemoveFilter} type="dashed">Remove filter</Button>
+                                <Button id='remove-filter' onClick={handleRemoveFilter} type="dashed">Remove filter</Button>
                             </p>
                         </div>
                     </div>
@@ -329,7 +331,7 @@ function Shop_CombinedFilters() {
                         : <h4 className='text-danger'>{products && products.length} Products</h4>}
 
                     {products.length < 1 && <p>No product found</p>}
-                    <div className="row pb-5">
+                    <div className="row pb-5" aria-label='filtered-products'>
                         {products.map(product =>
                             <div key={product._id} className='col-md-4 mt-3'>
                                 <ProductCard product={product} />
